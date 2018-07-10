@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SillyWonko.Models.Interfaces
 {
-    interface IWarehouse
+    public interface IWarehouse
     {
         Task<IActionResult> CreateProduct(Product product);
         Task<IActionResult> GetProductByID(int id);
