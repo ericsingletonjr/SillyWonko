@@ -32,7 +32,7 @@ namespace SillyWonko
             services.AddMvc();
             services.AddScoped<IWarehouse, DevWarehouse>();
 			services.AddDbContext<WonkoDbContext>(options => 
-                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                     options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +47,7 @@ namespace SillyWonko
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("Something went wrong.");
             });
         }
     }
