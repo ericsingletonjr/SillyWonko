@@ -38,6 +38,5 @@ namespace SillyWonko.Data
                 new {ID = 10, Name = "product10", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" }
             );
         }
-
 	}
 }
