@@ -1,0 +1,15 @@
+﻿@model SillyWonko.Models.ViewModels.LoginViewModel
+
+<form method="post" asp-action="Login">
+
+    <label asp-for="Email">Email</label>
+    <input type="text" asp-for="Email" />
+    <br />
+    <label asp-for="Password">Password</label>
+    <input type="password" asp-for="Password" />
+    <br />
+    <input type="submit" value="login" />
+</form>
+
+
+

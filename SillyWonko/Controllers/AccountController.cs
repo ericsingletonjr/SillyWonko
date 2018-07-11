@@ -31,7 +31,11 @@ namespace SillyWonko.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register() => View(new RegisterViewModel());
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+
         /// <summary>
         /// This action is our POST that takes the information from the Register
         /// View and uses a ViewModel to create a new ApplicationUser. From there,
@@ -47,16 +51,40 @@ namespace SillyWonko.Controllers
                 UserName = rvm.Email,
                 Email = rvm.Email,
                 FirstName = rvm.FirstName,
-                LastName = rvm.LastName,
-
+                LastName = rvm.LastName
             };
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, rvm.Password);
 
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
             return View(rvm);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new LoginViewModel());
+        }
+
+        /// <summary>
+        /// Action that takes in a LoginViewModel and is used to check if the database
+        /// has the correct information. If not, it will redirect to the login page again
+        /// or to the home page if successful
+        /// </summary>
+        /// <param name="lvm"LoginVieModel></param>
+        /// <returns>Redirect or a LoginView</returns>
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel lvm)
+        {
+            var result = await _signInManager.PasswordSignInAsync(lvm.Email,
+                lvm.Password, false, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(lvm);
         }
     }
 }
