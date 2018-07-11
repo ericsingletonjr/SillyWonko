@@ -9,8 +9,8 @@ using SillyWonko.Data;
 namespace SillyWonko.Migrations
 {
     [DbContext(typeof(WonkoDbContext))]
-    [Migration("20180710193528_seeding")]
-    partial class seeding
+    [Migration("20180711170355_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

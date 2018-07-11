@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,14 @@ namespace SillyWonko
             services.AddScoped<IWarehouse, DevWarehouse>();
 			services.AddDbContext<WonkoDbContext>(options => 
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+
+            //Sets up identity services
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("IdentityLocal")));
             
         }
 
@@ -45,6 +54,7 @@ namespace SillyWonko
             }
 
             app.UseMvcWithDefaultRoute();
+            app.UseAuthentication();
 
             app.Run(async (context) =>
             {
