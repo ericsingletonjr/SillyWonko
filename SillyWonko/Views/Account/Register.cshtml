@@ -1,1 +1,23 @@
-﻿Register Page
+﻿@model SillyWonko.Models.ViewModels.RegisterViewModel
+
+Register Page
+
+<form method="post" asp-action="Register">
+
+    <label asp-for="FirstName">First Name</label>
+    <input type="text" asp-for="FirstName" />
+    <br />
+    <label asp-for="LastName">Last Name</label>
+    <input type="text" asp-for="LastName" />
+    <br />
+    <label asp-for="Email">Email</label>
+    <input type="text" asp-for="Email" />
+    <br />
+    <label asp-for="Password">Password</label>
+    <input type="password" asp-for="Password" />
+    <br />
+    <label asp-for="ConfirmPassword">Confirm Password</label>
+    <input type="password" asp-for="ConfirmPassword" />
+    <br />
+    <input type="submit" value="register user" />
+</form>

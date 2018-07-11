@@ -31,8 +31,14 @@ namespace SillyWonko.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register() => View();
-
+        public IActionResult Register() => View(new RegisterViewModel());
+        /// <summary>
+        /// This action is our POST that takes the information from the Register
+        /// View and uses a ViewModel to create a new ApplicationUser. From there,
+        /// the user is passed into the userManager context to create the user
+        /// </summary>
+        /// <param name="rvm">RegisterViewModel</param>
+        /// <returns>Redirect to home if successful or register if model is invalid</returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
@@ -50,7 +56,7 @@ namespace SillyWonko.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            return View(rvm);
         }
     }
 }
