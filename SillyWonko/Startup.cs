@@ -60,6 +60,7 @@ namespace SillyWonko
             }
 
             app.UseMvcWithDefaultRoute();
+			app.UseStaticFiles();
             app.UseAuthentication();
 
             app.Run(async (context) =>
