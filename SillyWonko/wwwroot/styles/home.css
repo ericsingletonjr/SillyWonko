@@ -1,0 +1,40 @@
+﻿* {
+	box-sizing: border-box;
+}
+
+body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	background: rgb(195, 255, 240);
+	font-family: 'Roboto Condensed';
+	overflow-x: hidden;
+}
+
+html {
+	height: 100%;
+}
+
+header {
+	text-transform: uppercase;
+	text-align: center;
+	color: rgb(11, 37, 28);
+}
+
+h1 {
+	font-size: 3rem;
+}
+
+img {
+	display: block;
+	width: 10rem;
+	margin: 1rem auto;
+}
+
+@media (min-width: 600px) {
+	/* Larger than mobile, smaller than desktop. */
+}
+
+@media (min-width: 1024px) {
+	/* Larger than tablet, mostly form desktop. */
+}
