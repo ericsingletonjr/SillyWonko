@@ -42,7 +42,7 @@ namespace SillyWonko
                     .AddDefaultTokenProviders();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                     options.UseSqlServer(Configuration.GetConnectionString("IdentityLocal")));
+                     options.UseSqlServer(Configuration.GetConnectionString("IdentityProd")));
             services.Configure<IdentityOptions>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = false;
