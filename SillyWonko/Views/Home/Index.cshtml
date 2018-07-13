@@ -6,19 +6,22 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 <nav>
-    <section>
+    <section class="nav_identity">
         @if (TempData["LogOut"] != null)
         {<p>@TempData["LogOut"]</p>}
 
         @if (SignInManager.IsSignedIn(User))
         {
-            <p>Welcome @User.Identity.Name</p>
             <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
+            <p>@User.Identity.Name</p>
         }
         <ul>
             <li>Home</li>
+			<li>Products</li>
+			<li>Cart</li>
             <li>Register</li>
         </ul>
+
         @if (!SignInManager.IsSignedIn(User))
         {
             <form method="post" asp-controller="Account" asp-action="Login">
@@ -35,6 +38,9 @@
                 <input type="submit" value="logout" />
             </form>
         }
+
+		<p id="menu_tag">Menu</p>
+		<div id="menu_triangle"></div>
     </section>
 </nav>
 

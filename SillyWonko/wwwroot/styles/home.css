@@ -28,6 +28,7 @@ nav
 	color: rgb(255, 255, 255);
 	font-weight: 700;
 	padding-left: 2rem;
+	padding-right: 2rem;
 	height: 100%;
 	-webkit-transition: all 1s ease-in-out;
 	-moz-transition: all 1s ease-in-out;
@@ -54,6 +55,43 @@ nav input
 	border: none;
 	margin-top: 1rem;
 	padding: .75rem;
+}
+
+.nav_identity p:first-of-type
+{
+	margin: 2rem 0 0;
+	padding: 0;
+}
+
+.nav_identity p:nth-of-type(2)
+{
+	margin: 0;
+	color: rgb(144, 4, 4);
+	font-size: .75rem;
+}
+
+#menu_tag 
+{
+	position: absolute;
+	right: 0;
+	top: 2rem;
+	font-size: .75rem;
+	color: rgb(144, 4, 4);
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+}
+
+#menu_triangle 
+{
+	position: absolute;
+	right: .65rem;
+	top: 4.5rem;
+	width: 0;
+	height: 0;
+	border-top: .35rem solid transparent;
+	border-bottom: .35rem solid transparent;
+	border-right: .5rem solid rgb(255, 255, 255);
 }
 
 header 
