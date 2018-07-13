@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using SillyWonko.Models;
 using SillyWonko.Models.ViewModels;
 
 namespace SillyWonko.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> _userManager { get; set; }
@@ -31,6 +35,7 @@ namespace SillyWonko.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
@@ -44,25 +49,35 @@ namespace SillyWonko.Controllers
         /// <param name="rvm">RegisterViewModel</param>
         /// <returns>Redirect to home if successful or register if model is invalid</returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
-            var user = new ApplicationUser
+            if (ModelState.IsValid)
             {
-                UserName = rvm.Email,
-                Email = rvm.Email,
-                FirstName = rvm.FirstName,
-                LastName = rvm.LastName
-            };
-            var result = await _userManager.CreateAsync(user, rvm.Password);
+                var user = new ApplicationUser
+                {
+                    UserName = rvm.Email,
+                    Email = rvm.Email,
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName
+                };
+                var result = await _userManager.CreateAsync(user, rvm.Password);
 
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    Claim nameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+                    await _userManager.AddClaimAsync(user, nameClaim);
+                    //await _userManager.AddToRoleAsync(user, ApplicationRoles.Amdin);
+                    await _signInManager.SignInAsync(user, false);
+
+                    return RedirectToAction("Index","Home");
+                }
             }
             return View(rvm);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View(new LoginViewModel());
@@ -76,15 +91,26 @@ namespace SillyWonko.Controllers
         /// <param name="lvm"LoginVieModel></param>
         /// <returns>Redirect or a LoginView</returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
             var result = await _signInManager.PasswordSignInAsync(lvm.Email,
-                lvm.Password, false, lockoutOnFailure: false);
+                lvm.Password, false, false);
             if (result.Succeeded)
             {
+               bool check =  _signInManager.IsSignedIn(User);
+
                 return RedirectToAction("Index", "Home");
             }
             return View(lvm);
+        }
+
+        [Route("/logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            TempData["LogOut"] = "Logged Out";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

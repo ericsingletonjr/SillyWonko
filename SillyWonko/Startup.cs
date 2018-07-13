@@ -33,20 +33,18 @@ namespace SillyWonko
         {
             services.AddMvc();
             services.AddScoped<IWarehouse, DevWarehouse>();
+
 			services.AddDbContext<WonkoDbContext>(options => 
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("IdentityLocal")));
 
             //Sets up identity services
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                     options.UseSqlServer(Configuration.GetConnectionString("IdentityProd")));
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = false;
-            });
             //services.AddTransient<IEmailSender, EmailSender>();
 
         }
@@ -58,10 +56,9 @@ namespace SillyWonko
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvcWithDefaultRoute();
-			app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
 
             app.Run(async (context) =>
             {

@@ -1,20 +1,41 @@
-﻿@model SillyWonko.Models.ApplicationUser
+﻿@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@using SillyWonko.Models;
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
 
 <a asp-controller="Account" asp-action="Register">register</a>
 <a asp-controller="Account" asp-action="Login">login</a>
 
 <main>
-	<header>
-		<img src="~/images/wonko_logo.svg" alt="Wonko Logo" />
-		<h1>Sample Heading</h1>
-		<h2>Sample Subheading</h2>
-		<p>Sample paragraph text</p>
-		<p>Secondary sample paragraph text</p>
-		<form method="post" asp-controller="Home" form-action="Index">
-			<div>
-				<input placeholder="Please type things" asp-for="UserName" />
-				<button type="submit">Test</button>
-			</div>
-		</form>
-	</header>
+    @if (TempData["LogOut"] != null)
+    {<p>@TempData["LogOut"]</p>}
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <p>Welcome @User.Identity.Name</p>
+        <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
+
+
+    }
+    else
+    {
+        <p>Welcome Anonymous user</p>
+
+    }
+
+    <header>
+        <img src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+        <h1>Sample Heading</h1>
+        <h2>Sample Subheading</h2>
+        <p>Sample paragraph text</p>
+        <p>Secondary sample paragraph text</p>
+        <form method="post" asp-controller="Home" form-action="Index">
+            <div>
+                <input placeholder="Please type things" />
+                <button type="submit">Test</button>
+            </div>
+        </form>
+    </header>
 </main>
