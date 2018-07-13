@@ -15,7 +15,6 @@ namespace SillyWonko.Models
     public static class ApplicationRoles
     {
         public const string Member = "Member";
-        public const string Amdin = "amdin";
         public const string Administrator = "Admin";
     }
 }

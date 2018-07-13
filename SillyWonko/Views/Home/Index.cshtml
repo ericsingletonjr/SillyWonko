@@ -6,34 +6,36 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 
-
-<div>
-    @if (TempData["LogOut"] != null)
-    {<p>@TempData["LogOut"]</p>}
-
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <p>Welcome @User.Identity.Name</p>
-        <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
-    }
-    else
-    {
-        <p>Welcome Anonymous user</p>
-    }
-</div>
 <nav>
     <section>
+        @if (TempData["LogOut"] != null)
+        {<p>@TempData["LogOut"]</p>}
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <p>Welcome @User.Identity.Name</p>
+            <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
+        }
         <ul>
             <li>Home</li>
             <li>Register</li>
         </ul>
-        <form method="post" asp-controller="Account" asp-action="Login">
-            <input type="text" asp-for="Email" placeholder="email" />
-            <br />
-            <input type="password" asp-for="Password" placeholder="password" />
-            <br />
-            <input type="submit" value="login" />
-        </form>
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <form method="post" asp-controller="Account" asp-action="Login">
+                <input type="text" asp-for="Email" placeholder="email" />
+                <br />
+                <input type="password" asp-for="Password" placeholder="password" />
+                <br />
+                <input type="submit" value="login" />
+            </form>
+        }
+        else
+        {
+            <form asp-controller="Account" asp-action="LogOut">
+                <input type="submit" value="logout" />
+            </form>
+        }
     </section>
 </nav>
 
