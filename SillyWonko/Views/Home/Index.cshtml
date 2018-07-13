@@ -1,15 +1,30 @@
-﻿@model SillyWonko.Models.ApplicationUser
+﻿@model SillyWonko.Models.ViewModels.LoginViewModel
 
-<div id="account_section">
+@*<div id="account_section">
 	<button type="button" onclick="location.href='@Url.Action("Register", "Account")'">
 		Register
 	</button>
 	<button type="button" onclick="location.href='@Url.Action("Login", "Account")'">
 		Login
 	</button>
-</div>
+</div>*@
 
 <main class="main_container">
+	<nav>
+		<section>
+			<ul>
+				<li>Home</li>
+				<li>Register</li>
+			</ul>
+			<form method="post" asp-action="Login">
+				<input type="text" asp-for="Email" placeholder="email" />
+				<br />
+				<input type="password" asp-for="Password" placeholder="password" />
+				<br />
+				<input type="submit" value="login" />
+			</form>
+		</section>
+	</nav>
 	<header>
 		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
 		<p id="main_subheading">A most <span>curious</span> shoppe</p>
