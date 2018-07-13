@@ -10,7 +10,7 @@ using SillyWonko.Data;
 namespace SillyWonko.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180711190957_initial")]
+    [Migration("20180713163139_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
