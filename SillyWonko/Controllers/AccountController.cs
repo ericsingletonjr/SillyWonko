@@ -50,6 +50,7 @@ namespace SillyWonko.Controllers
         /// <returns>Redirect to home if successful or register if model is invalid</returns>
         [HttpPost]
         [AllowAnonymous]
+        [Route("/register")]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
@@ -65,8 +66,33 @@ namespace SillyWonko.Controllers
 
                 if (result.Succeeded)
                 {
+                    List<Claim> Claims = new List<Claim>();
+                    Random random = new Random();
+                    int randNum = random.Next(1, 16);
+
+                    if(randNum % 15 == 0)
+                    {
+                        Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
+                        Claims.Add(buzzyFizz);
+                    }
+                    if (randNum % 5 == 0)
+                    {
+                        Claim fizzy = new Claim("Fizzy", "Silver Cricket Member");
+                        Claims.Add(fizzy);
+                    }
+                    if (randNum % 3 == 0)
+                    {
+                        Claim buzzy = new Claim("Buzzy", "Bronze Cricket Member");
+                        Claims.Add(buzzy);
+                    }
+
                     Claim nameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
-                    await _userManager.AddClaimAsync(user, nameClaim);
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                    Claims.Add(nameClaim);
+                    Claims.Add(emailClaim);
+                    await _userManager.AddClaimsAsync(user, Claims);
+
                     //await _userManager.AddToRoleAsync(user, ApplicationRoles.Amdin);
                     await _signInManager.SignInAsync(user, false);
 
