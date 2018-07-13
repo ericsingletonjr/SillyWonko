@@ -110,19 +110,19 @@ button:hover
 	width: 90%;
 }
 
-/* TABLET LAYOUT */
+/* TABLET */
 @media (min-width: 600px) 
 {
 
 }
 
-/* DESKTOP LAYOUT */
+/* DESKTOP */
 @media (min-width: 1024px) 
 {
 
 }
 
-/* START HOVER EFFECT */
+/* HOVER */
 	
 .for_later 
 {
@@ -144,4 +144,4 @@ button:hover
 	-ms-transform: translate(12em,0);
 }
 
-/* END HOVER EFFECT */
+/* END HOVER */
