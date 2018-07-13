@@ -18,16 +18,29 @@ body
 	font-size: 1.2rem;
 }
 
-nav
+nav 
 {
 	text-transform: uppercase;
 	position: fixed;
+	left: -18rem;
 	width: 20rem;
 	background: rgba(255, 67, 67, .85);
 	color: rgb(255, 255, 255);
 	font-weight: 700;
 	padding-left: 2rem;
 	height: 100%;
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	-ms-transition: all 1s ease-in-out;
+}
+
+nav:hover 
+{
+	-webkit-transform: translate(15em, 0);
+	-moz-transform: translate(15em, 0);
+	-o-transform: translate(15em, 0);
+	-ms-transform: translate(15em, 0);
 }
 
 nav ul
@@ -39,8 +52,8 @@ nav ul
 nav input
 {
 	border: none;
-	margin-top: .5rem;
-	padding: .5rem;
+	margin-top: 1rem;
+	padding: .75rem;
 }
 
 header 
@@ -63,9 +76,10 @@ p
 
 #main_logo 
 {
+	padding-top: 1.2rem;
 	display: block;
 	width: 10rem;
-	margin: 1rem auto;
+	margin: 0 auto 1.2rem;
 	clear: right;
 }
 
@@ -91,7 +105,7 @@ span
 
 button, input[type=submit]
 {
-	font-weight: 300;
+	font-weight: 700;
 	background: rgb(255, 67, 67);
 	color: rgb(255, 255, 255);
 	text-transform: uppercase;
@@ -152,9 +166,6 @@ button:hover, input[type=submit]:hover
 	
 .for_later 
 {
-	width: 50px;
-	height: 50px;
-	background: red;
 	-webkit-transition: all 1s ease-in-out;
 	-moz-transition: all 1s ease-in-out;
 	-o-transition: all 1s ease-in-out;
