@@ -1,18 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity;
+﻿@model SillyWonko.Models.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Identity;
 @using System.Security.Claims;
 @using SillyWonko.Models;
 
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
-
-<div id="account_section">
-	<button type="button" onclick="location.href='@Url.Action("Register", "Account")'">
-		Register
-	</button>
-	<button type="button" onclick="location.href='@Url.Action("Login", "Account")'">
-		Login
-	</button>
-</div>
 
 <main class="main_container">
     @if (TempData["LogOut"] != null)
@@ -22,14 +14,29 @@
     {
         <p>Welcome @User.Identity.Name</p>
         <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
-
-
     }
     else
     {
         <p>Welcome Anonymous user</p>
-
     }
+
+	<nav>
+		<section>
+			<ul>
+				<li>Home</li>
+				<li>Register</li>
+			</ul>
+			<form method="post" asp-action="Login">
+				<input type="text" asp-for="Email" placeholder="email" />
+				<br />
+				<input type="password" asp-for="Password" placeholder="password" />
+				<br />
+				<input type="submit" value="login" />
+			</form>
+		</section>
+	</nav>
+	<header>
+
 	<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
 		<p id="main_subheading">A most <span>curious</span> shoppe</p>
 	</header>
