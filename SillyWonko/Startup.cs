@@ -45,6 +45,11 @@ namespace SillyWonko
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
+            });
+
             //services.AddTransient<IEmailSender, EmailSender>();
 
         }
@@ -57,8 +62,8 @@ namespace SillyWonko
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
             {

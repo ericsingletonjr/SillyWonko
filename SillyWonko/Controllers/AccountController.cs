@@ -22,7 +22,7 @@ namespace SillyWonko.Controllers
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
-        public AccountController(UserManager<ApplicationUser> userManager, 
+        public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
@@ -70,7 +70,13 @@ namespace SillyWonko.Controllers
                     Random random = new Random();
                     int randNum = random.Next(1, 16);
 
-                    if(randNum % 15 == 0)
+                    if (user.FirstName.ToLower() == ApplicationRoles.Administrator.ToLower())
+                    {
+                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Administrator);
+                        randNum = 15;
+                    }
+
+                    if (randNum % 15 == 0)
                     {
                         Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
                         Claims.Add(buzzyFizz);
@@ -91,12 +97,13 @@ namespace SillyWonko.Controllers
 
                     Claims.Add(nameClaim);
                     Claims.Add(emailClaim);
-                    await _userManager.AddClaimsAsync(user, Claims);
 
-                    //await _userManager.AddToRoleAsync(user, ApplicationRoles.Amdin);
+                    await _userManager.AddClaimsAsync(user, Claims);
+                    await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+
                     await _signInManager.SignInAsync(user, false);
 
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(rvm);
@@ -120,13 +127,22 @@ namespace SillyWonko.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
-            var result = await _signInManager.PasswordSignInAsync(lvm.Email,
-                lvm.Password, false, false);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-               bool check =  _signInManager.IsSignedIn(User);
+                var result = await _signInManager.PasswordSignInAsync(lvm.Email,
+                    lvm.Password, false, false);
 
-                return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    var user = await _userManager.FindByEmailAsync(lvm.Email);
+
+                    if (await _userManager.IsInRoleAsync(user,ApplicationRoles.Administrator))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View(lvm);
         }
