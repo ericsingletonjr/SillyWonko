@@ -1,0 +1,102 @@
+﻿* 
+{
+	box-sizing: border-box;
+}
+
+html 
+{
+	height: 100%;
+}
+
+body 
+{
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	background: rgb(195, 255, 240);
+	font-family: 'Roboto Condensed';
+	font-size: 1.2rem;
+}
+
+header 
+{
+	margin: 25vh auto 0;
+	font-family: 'Roboto Condensed';
+	font-weight: 300;
+	text-align: center;
+	color: rgb(11, 37, 28);
+}
+
+h1 
+{
+	font-size: 3rem;
+}
+
+p
+{
+	font-size: 1.2rem;
+}
+
+#main_logo 
+{
+	padding-top: 1.2rem;
+	display: block;
+	width: 18rem;
+	margin: 0 auto 1.2rem;
+	clear: right;
+}
+
+#main_subheading 
+{
+	display: inline-block;
+	line-height: 2rem;
+	background: rgb(255, 67, 67);
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+	padding: 1rem;
+	margin-top: 0;
+}
+
+span
+{
+	font-size: 2rem;
+	line-height: 2rem;
+	text-transform: none;
+	font-family: Yellowtail;
+	font-weight: 700;
+}
+
+button, input[type=submit]
+{
+	display: block;
+	margin: 3rem auto 0;
+	border: none;
+	font-weight: 700;
+	background: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+	padding: 1rem;
+}
+
+button:hover, input[type=submit]:hover
+{
+	background: rgb(255, 103, 103);
+}
+
+.main_container 
+{
+	margin: 0 auto;
+	max-width: 80rem;
+}
+
+/* TABLET */
+@media (min-width: 600px) 
+{
+
+}
+
+/* DESKTOP */
+@media (min-width: 1024px) 
+{
+
+}
