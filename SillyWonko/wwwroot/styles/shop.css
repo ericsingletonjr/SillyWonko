@@ -172,10 +172,12 @@ button:hover, input[type=submit]:hover
 
 .product_cell
 {
+	position: relative;
 	width: 15rem;
 	margin: 1rem;
 	background: white;
 	box-shadow: 0 0 .5rem rgba(0, 0, 0, .15);
+	z-index: -1;
 }
 
 .product_image 
@@ -185,6 +187,19 @@ button:hover, input[type=submit]:hover
 	display: block;
 	margin: 0 auto;
 	width: 90%;
+}
+
+.product_name
+{
+	text-transform: uppercase;
+	font-weight: 700;
+	color: rgb(255, 67, 67);
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 5%;
+	text-align: center;
+	margin: auto;
 }
 
 /* TABLET */
