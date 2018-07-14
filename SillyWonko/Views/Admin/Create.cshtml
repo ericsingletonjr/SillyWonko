@@ -1,0 +1,21 @@
+﻿@model SillyWonko.Models.Product
+
+<form method="post" asp-action="Create">
+
+    <label asp-for="Name">Name</label>
+    <input type="text" asp-for="Name" />
+    <br />
+    <label asp-for="Sku">Sku</label>
+    <input type="text" asp-for="Sku" />
+    <br />
+    <label asp-for="Price">Price</label>
+    <input type="number" asp-for="Price" />
+    <br />
+    <label asp-for="Description">Description</label>
+    <input type="text" asp-for="Description" />
+    <br />
+    <label asp-for="Image">Image Url</label>
+    <input type="text" asp-for="Image" />
+    <br />
+    <input type="submit" value="create" />
+</form>

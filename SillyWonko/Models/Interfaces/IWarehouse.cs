@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SillyWonko.Models.Interfaces
 {
     public interface IWarehouse
     {
-        Task<IActionResult> CreateProduct(Product product);
-        Task<IActionResult> GetProductByID(int id);
-        Task<IActionResult> GetProducts();
-        Task<IActionResult> UpdateProduct(int id, Product product);
-        Task<IActionResult> DeleteProduct(int id);
+        Task<HttpStatusCode> CreateProduct(Product product);
+        Task<Product> GetProductByID(int id);
+        Task<List<Product>> GetProducts();
+        Task<Product> UpdateProduct(int id, Product product);
+        Task<HttpStatusCode> DeleteProduct(int id);
     }
 }
