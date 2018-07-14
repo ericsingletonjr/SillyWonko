@@ -26,16 +26,16 @@ namespace SillyWonko.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasData(
-                new {ID = 1, Name = "product1", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 2, Name = "product2", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 3, Name = "product3", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 4, Name = "product4", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 5, Name = "product5", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 6, Name = "product6", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 7, Name = "product7", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 8, Name = "product8", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 9, Name = "product9", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" },
-                new {ID = 10, Name = "product10", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "" }
+                new {ID = 1, Name = "product1", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_one.jpg" },
+                new {ID = 2, Name = "product2", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_two.jpg" },
+                new {ID = 3, Name = "product3", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_three.jpg" },
+                new {ID = 4, Name = "product4", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_four.jpg" },
+                new {ID = 5, Name = "product5", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_five.jpg" },
+                new {ID = 6, Name = "product6", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_six.jpg" },
+                new {ID = 7, Name = "product7", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_sevn.jpg" },
+                new {ID = 8, Name = "product8", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_eight.jpg" },
+                new {ID = 9, Name = "product9", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_nine.jpg" },
+                new {ID = 10, Name = "product10", Sku = "ABCD0001", Price = 9.99M, Description = "description", Image = "image/candy_ten.jpg" }
             );
         }
 	}
