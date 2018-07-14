@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SillyWonko.Data;
 using SillyWonko.Models;
+using SillyWonko.Models.Handlers;
 using SillyWonko.Models.Interfaces;
 
 namespace SillyWonko
@@ -48,9 +50,11 @@ namespace SillyWonko
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
+                options.AddPolicy("Employee", policy => policy.Requirements.Add(new EmployeeEmailRequirement("wonko.com")));
             });
 
             //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<IAuthorizationHandler, EmployeeEmailHandler>();
 
         }
 

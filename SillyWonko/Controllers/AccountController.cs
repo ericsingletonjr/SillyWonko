@@ -76,20 +76,26 @@ namespace SillyWonko.Controllers
                         randNum = 15;
                     }
 
-                    if (randNum % 15 == 0)
+                    if (randNum % 15 == 0 || user.Email.ToLower() == "gold@wonko.com")
                     {
                         Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
                         Claims.Add(buzzyFizz);
                     }
-                    if (randNum % 5 == 0)
+                    if (randNum % 5 == 0 || user.Email.ToLower() == "silver@wonko.com")
                     {
                         Claim fizzy = new Claim("Fizzy", "Silver Cricket Member");
                         Claims.Add(fizzy);
                     }
-                    if (randNum % 3 == 0)
+                    if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@wonko.com")
                     {
                         Claim buzzy = new Claim("Buzzy", "Bronze Cricket Member");
                         Claims.Add(buzzy);
+                    }
+
+                    if(user.Email.ToLower().Split("@")[1] == "wonko.com")
+                    {
+                        Claim workerClaim = new Claim("Employee", user.Email.ToLower());
+                        Claims.Add(workerClaim);
                     }
 
                     Claim nameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
