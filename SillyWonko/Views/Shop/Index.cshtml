@@ -1,0 +1,93 @@
+﻿@model SillyWonko.Models.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@using SillyWonko.Models;
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+<nav>
+	<section class="nav_identity">
+		@if (TempData["LogOut"] != null)
+		{<p>@TempData["LogOut"]</p>}
+
+		@if (SignInManager.IsSignedIn(User))
+		{
+			<p>@User.Claims.First(c => c.Type == "FullName").Value</p>
+			<p>@User.Identity.Name</p>
+		}
+		<ul>
+			<li>Home</li>
+			<li>Products</li>
+			<li>Cart</li>
+			<li>Register</li>
+		</ul>
+
+		@if (!SignInManager.IsSignedIn(User))
+		{
+			<form method="post" asp-controller="Account" asp-action="Login">
+				<input type="text" asp-for="Email" placeholder="email" />
+				<br />
+				<input type="password" asp-for="Password" placeholder="password" />
+				<br />
+				<input type="submit" value="login" />
+			</form>
+		}
+		else
+		{
+			<form asp-controller="Account" asp-action="LogOut">
+				<input type="submit" value="logout" />
+			</form>
+		}
+		<div id="menu_indicator">
+			<p id="menu_tag">Menu</p>
+			<div id="menu_triangle"></div>
+		</div>
+	</section>
+</nav>
+
+<main class="main_container">
+
+	<header>
+
+		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+		<p id="main_subheading">A most <span>curious</span> shoppe</p>
+	</header>
+	<section class="product_grid">
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_twelve.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_eleven.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_ten.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_nine.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_eight.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_seven.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_six.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_five.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_four.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_three.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_two.jpg" />
+		</div>
+		<div class="product_cell">
+			<img class="product_image" src="~/images/candy_one.jpg" />
+		</div>
+	</section>
+</main>
