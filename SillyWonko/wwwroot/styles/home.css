@@ -3,7 +3,8 @@
 	box-sizing: border-box;
 }
 
-html {
+html 
+{
 	height: 100%;
 }
 
@@ -14,10 +15,12 @@ body
 	padding: 0;
 	background: rgb(195, 255, 240);
 	font-family: 'Roboto Condensed';
+	font-size: 1.2rem;
 }
 
 header 
 {
+	margin: 25vh auto 0;
 	font-family: 'Roboto Condensed';
 	font-weight: 300;
 	text-align: center;
@@ -36,9 +39,10 @@ p
 
 #main_logo 
 {
+	padding-top: 1.2rem;
 	display: block;
-	width: 10rem;
-	margin: 1rem auto;
+	width: 18rem;
+	margin: 0 auto 1.2rem;
 	clear: right;
 }
 
@@ -62,18 +66,19 @@ span
 	font-weight: 700;
 }
 
-button
+button, input[type=submit]
 {
-	font-weight: 300;
+	display: block;
+	margin: 3rem auto 0;
 	border: none;
-	background: rgb(255, 67, 67);
+	font-weight: 700;
+	background: rgb(0, 0, 0);
 	color: rgb(255, 255, 255);
 	text-transform: uppercase;
 	padding: 1rem;
-	float: right;
 }
 
-button:hover
+button:hover, input[type=submit]:hover
 {
 	background: rgb(255, 103, 103);
 }
@@ -84,64 +89,14 @@ button:hover
 	max-width: 80rem;
 }
 
-.product_grid {
-	font-size: 0;
-	margin: 0 auto;
-	justify-content: center;
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-}
-
-.product_cell
-{
-	width: 15rem;
-	margin: 1rem;
-	background: white;
-	box-shadow: 0 0 .5rem rgba(0, 0, 0, .15);
-}
-
-.product_image 
-{
-	padding-top: 5%;
-	padding-bottom: 20%;
-	display: block;
-	margin: 0 auto;
-	width: 90%;
-}
-
-/* TABLET LAYOUT */
+/* TABLET */
 @media (min-width: 600px) 
 {
 
 }
 
-/* DESKTOP LAYOUT */
+/* DESKTOP */
 @media (min-width: 1024px) 
 {
 
 }
-
-/* START HOVER EFFECT */
-	
-.for_later 
-{
-	width: 50px;
-	height: 50px;
-	background: red;
-	-webkit-transition: all 1s ease-in-out;
-	-moz-transition: all 1s ease-in-out;
-	-o-transition: all 1s ease-in-out;
-	-ms-transition: all 1s ease-in-out;
-}
-
-
-.for_later:hover
-{
-	-webkit-transform: translate(12em,0);
-	-moz-transform: translate(12em,0);
-	-o-transform: translate(12em,0);
-	-ms-transform: translate(12em,0);
-}
-
-/* END HOVER EFFECT */

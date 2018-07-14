@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SillyWonko.Data;
 using SillyWonko.Models;
+using SillyWonko.Models.Handlers;
 using SillyWonko.Models.Interfaces;
 
 namespace SillyWonko
@@ -33,21 +35,31 @@ namespace SillyWonko
         {
             services.AddMvc();
             services.AddScoped<IWarehouse, DevWarehouse>();
+
 			services.AddDbContext<WonkoDbContext>(options => 
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("IdentityProd")));
 
             //Sets up identity services
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                     options.UseSqlServer(Configuration.GetConnectionString("IdentityProd")));
-            services.Configure<IdentityOptions>(options =>
+            services.AddAuthorization(options =>
             {
-                options.SignIn.RequireConfirmedEmail = false;
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
+                options.AddPolicy("Employee", policy => policy.Requirements.Add(new EmployeeEmailRequirement("wonko.com")));
+
+                options.AddPolicy("Golden", policy => policy.Requirements.Add(new CricketRequirement("Golden Cricket Member")));
+                options.AddPolicy("Silver", policy => policy.Requirements.Add(new CricketRequirement("Silver Cricket Member")));
+                options.AddPolicy("Bronze", policy => policy.Requirements.Add(new CricketRequirement("Bronze Cricket Member")));
             });
+
             //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<IAuthorizationHandler, EmployeeEmailHandler>();
+            services.AddSingleton<IAuthorizationHandler, CricketHandler>();
 
         }
 
@@ -58,10 +70,9 @@ namespace SillyWonko
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvcWithDefaultRoute();
-			app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
             {

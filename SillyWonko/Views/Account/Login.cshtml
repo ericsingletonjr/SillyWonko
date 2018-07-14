@@ -1,15 +1,11 @@
-﻿@model SillyWonko.Models.ViewModels.LoginViewModel
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
-<form method="post" asp-action="Login">
+<form method="post" asp-controller="Account" asp-action="Login">
+    <div asp-validation-summary="All"></div>
 
-    <label asp-for="Email">Email</label>
-    <input type="text" asp-for="Email" />
+    <input type="text" asp-for="Login.Email" placeholder="email" />
     <br />
-    <label asp-for="Password">Password</label>
-    <input type="password" asp-for="Password" />
+    <input type="password" asp-for="Login.Password" placeholder="password" />
     <br />
     <input type="submit" value="login" />
 </form>
-
-
-

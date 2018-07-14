@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using SillyWonko.Models;
 using SillyWonko.Models.ViewModels;
 
 namespace SillyWonko.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> _userManager { get; set; }
@@ -18,7 +22,7 @@ namespace SillyWonko.Controllers
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
-        public AccountController(UserManager<ApplicationUser> userManager, 
+        public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
@@ -31,6 +35,7 @@ namespace SillyWonko.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
@@ -44,28 +49,76 @@ namespace SillyWonko.Controllers
         /// <param name="rvm">RegisterViewModel</param>
         /// <returns>Redirect to home if successful or register if model is invalid</returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
-            var user = new ApplicationUser
+            if (ModelState.IsValid)
             {
-                UserName = rvm.Email,
-                Email = rvm.Email,
-                FirstName = rvm.FirstName,
-                LastName = rvm.LastName
-            };
-            var result = await _userManager.CreateAsync(user, rvm.Password);
+                var user = new ApplicationUser
+                {
+                    UserName = rvm.Email,
+                    Email = rvm.Email,
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName
+                };
+                var result = await _userManager.CreateAsync(user, rvm.Password);
 
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    List<Claim> Claims = new List<Claim>();
+                    Random random = new Random();
+                    int randNum = random.Next(1, 16);
+
+                    if (user.FirstName.ToLower() == ApplicationRoles.Administrator.ToLower())
+                    {
+                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Administrator);
+                        randNum = 15;
+                    }
+
+                    if (randNum % 15 == 0 || user.Email.ToLower() == "gold@wonko.com")
+                    {
+                        Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
+                        Claims.Add(buzzyFizz);
+                    }
+                    if (randNum % 5 == 0 || user.Email.ToLower() == "silver@wonko.com")
+                    {
+                        Claim fizzy = new Claim("BuzzyFizz", "Silver Cricket Member");
+                        Claims.Add(fizzy);
+                    }
+                    if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@wonko.com")
+                    {
+                        Claim buzzy = new Claim("BuzzyFizz", "Bronze Cricket Member");
+                        Claims.Add(buzzy);
+                    }
+
+                    if(user.Email.ToLower().Split("@")[1] == "wonko.com")
+                    {
+                        Claim workerClaim = new Claim("Employee", user.Email.ToLower());
+                        Claims.Add(workerClaim);
+                    }
+
+                    Claim nameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                    Claims.Add(nameClaim);
+                    Claims.Add(emailClaim);
+
+                    await _userManager.AddClaimsAsync(user, Claims);
+                    await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+
+                    await _signInManager.SignInAsync(user, false);
+
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View(rvm);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
-            return View(new LoginViewModel());
+            return View(new UserViewModel());
         }
 
         /// <summary>
@@ -76,15 +129,39 @@ namespace SillyWonko.Controllers
         /// <param name="lvm"LoginVieModel></param>
         /// <returns>Redirect or a LoginView</returns>
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel lvm)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(UserViewModel uvm)
         {
-            var result = await _signInManager.PasswordSignInAsync(lvm.Email,
-                lvm.Password, false, lockoutOnFailure: false);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                var result = await _signInManager.PasswordSignInAsync(uvm.Login.Email,
+                    uvm.Login.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    var user = await _userManager.FindByEmailAsync(uvm.Login.Email);
+
+                    if (await _userManager.IsInRoleAsync(user,ApplicationRoles.Administrator))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+
+                    return RedirectToAction("Index", "Shop");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Whoops try again");
+                }
             }
-            return View(lvm);
+            return View(uvm);
+        }
+
+        [Route("/logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            TempData["LogOut"] = "Logged Out";
+            return RedirectToAction("Index", "Shop");
         }
     }
 }

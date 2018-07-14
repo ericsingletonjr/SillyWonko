@@ -1,0 +1,15 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+
+<section>
+    Admin controls for Product CRUD
+</section>
+<section>
+    Admin controls for Users?
+</section>
+<section>
+    <p>List of products</p>
+    @foreach(var product in Model.Products)
+    {
+        <a asp-controller="Admin" asp-action="Details" asp-route-id="@product.ID">@product.Name</a>
+    }
+</section>

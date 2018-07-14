@@ -11,4 +11,10 @@ namespace SillyWonko.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
+
+    public static class ApplicationRoles
+    {
+        public const string Member = "Member";
+        public const string Administrator = "Admin";
+    }
 }

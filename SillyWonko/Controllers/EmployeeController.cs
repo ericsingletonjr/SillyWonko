@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SillyWonko.Controllers
 {
-    public class HomeController : Controller
+    public class EmployeeController : Controller
     {
+        [Authorize(Policy = "Employee")]
         public IActionResult Index()
         {
             return View();
