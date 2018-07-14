@@ -50,7 +50,6 @@ namespace SillyWonko.Controllers
         /// <returns>Redirect to home if successful or register if model is invalid</returns>
         [HttpPost]
         [AllowAnonymous]
-        [Route("/register")]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
@@ -148,6 +147,10 @@ namespace SillyWonko.Controllers
                     }
 
                     return RedirectToAction("Index", "Shop");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Whoops try again");
                 }
             }
             return View(uvm);

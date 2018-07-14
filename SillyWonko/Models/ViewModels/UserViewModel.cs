@@ -10,17 +10,8 @@ namespace SillyWonko.Models.ViewModels
     {
         public ApplicationUser User { get; set; }
         public LoginViewModel Login { get; set; }
+        public Product Product { get; set; }
         public IEnumerable<Claim> Claims { get; set; }
         public IEnumerable<Product> Products { get; set; }
-
-        public static UserViewModel UserDetails(ApplicationUser user, IEnumerable<Claim> claims)
-        {
-            UserViewModel uvm = new UserViewModel
-            {
-                User = user,
-                Claims = claims
-            };
-            return uvm;
-        }
     }
 }
