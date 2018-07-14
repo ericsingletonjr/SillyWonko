@@ -18,7 +18,7 @@ namespace SillyWonko.Controllers
             _context = context;
         }
         /// <summary>
-        /// Action to grab the index of the home controller
+        /// Action to grab the index of the shop controller
         /// </summary>
         /// <returns>View</returns>
         public async Task<IActionResult> Index()
@@ -29,6 +29,18 @@ namespace SillyWonko.Controllers
             };
             
             return View(uvm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            UserViewModel uvm = new UserViewModel();
+            if (id.HasValue)
+            {
+                uvm.Product = await _context.GetProductByID(id.Value);
+                return View(uvm);
+            }
+            return Redirect("Index");
         }
     }
 }
