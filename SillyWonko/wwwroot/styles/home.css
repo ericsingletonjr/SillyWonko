@@ -33,7 +33,6 @@ nav
 	-webkit-transition: all 1s ease-in-out;
 	-moz-transition: all 1s ease-in-out;
 	-o-transition: all 1s ease-in-out;
-	-ms-transition: all 1s ease-in-out;
 }
 
 nav:hover 
@@ -86,7 +85,7 @@ nav input
 {
 	position: absolute;
 	right: .65rem;
-	top: 4.5rem;
+	top: 2.5rem;
 	width: 0;
 	height: 0;
 	border-top: .35rem solid transparent;
