@@ -21,9 +21,14 @@ namespace SillyWonko.Controllers
         /// Action to grab the index of the home controller
         /// </summary>
         /// <returns>View</returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            UserViewModel uvm = new UserViewModel
+            {
+                Products = await _context.GetProducts()
+            };
+            
+            return View(uvm);
         }
     }
 }
