@@ -119,7 +119,7 @@ namespace SillyWonko.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View(new LoginViewModel());
+            return View(new UserViewModel());
         }
 
         /// <summary>
@@ -131,26 +131,26 @@ namespace SillyWonko.Controllers
         /// <returns>Redirect or a LoginView</returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel lvm)
+        public async Task<IActionResult> Login(UserViewModel uvm)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(lvm.Email,
-                    lvm.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(uvm.Login.Email,
+                    uvm.Login.Password, false, false);
 
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(lvm.Email);
+                    var user = await _userManager.FindByEmailAsync(uvm.Login.Email);
 
                     if (await _userManager.IsInRoleAsync(user,ApplicationRoles.Administrator))
                     {
                         return RedirectToAction("Index", "Admin");
                     }
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Shop");
                 }
             }
-            return View(lvm);
+            return View(uvm);
         }
 
         [Route("/logout")]
@@ -158,7 +158,7 @@ namespace SillyWonko.Controllers
         {
             await _signInManager.SignOutAsync();
             TempData["LogOut"] = "Logged Out";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Shop");
         }
     }
 }
