@@ -51,10 +51,15 @@ namespace SillyWonko
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
                 options.AddPolicy("Employee", policy => policy.Requirements.Add(new EmployeeEmailRequirement("wonko.com")));
+
+                options.AddPolicy("Golden", policy => policy.Requirements.Add(new CricketRequirement("Golden Cricket Member")));
+                options.AddPolicy("Silver", policy => policy.Requirements.Add(new CricketRequirement("Silver Cricket Member")));
+                options.AddPolicy("Bronze", policy => policy.Requirements.Add(new CricketRequirement("Bronze Cricket Member")));
             });
 
             //services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<IAuthorizationHandler, EmployeeEmailHandler>();
+            services.AddSingleton<IAuthorizationHandler, CricketHandler>();
 
         }
 

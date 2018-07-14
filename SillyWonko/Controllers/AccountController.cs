@@ -83,12 +83,12 @@ namespace SillyWonko.Controllers
                     }
                     if (randNum % 5 == 0 || user.Email.ToLower() == "silver@wonko.com")
                     {
-                        Claim fizzy = new Claim("Fizzy", "Silver Cricket Member");
+                        Claim fizzy = new Claim("BuzzyFizz", "Silver Cricket Member");
                         Claims.Add(fizzy);
                     }
                     if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@wonko.com")
                     {
-                        Claim buzzy = new Claim("Buzzy", "Bronze Cricket Member");
+                        Claim buzzy = new Claim("BuzzyFizz", "Bronze Cricket Member");
                         Claims.Add(buzzy);
                     }
 
