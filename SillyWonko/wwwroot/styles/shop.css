@@ -33,6 +33,7 @@ nav
 	-webkit-transition: all 1s ease-in-out;
 	-moz-transition: all 1s ease-in-out;
 	-o-transition: all 1s ease-in-out;
+	z-index: 1;
 }
 
 nav:hover 
@@ -177,7 +178,6 @@ button:hover, input[type=submit]:hover
 	margin: 1rem;
 	background: white;
 	box-shadow: 0 0 .5rem rgba(0, 0, 0, .15);
-	z-index: -1;
 }
 
 .product_image 
