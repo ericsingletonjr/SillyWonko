@@ -40,7 +40,7 @@ namespace SillyWonko
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                     options.UseSqlServer(Configuration.GetConnectionString("IdentityLocal")));
+                     options.UseSqlServer(Configuration.GetConnectionString("IdentityProd")));
 
             //Sets up identity services
             services.AddIdentity<ApplicationUser, IdentityRole>()

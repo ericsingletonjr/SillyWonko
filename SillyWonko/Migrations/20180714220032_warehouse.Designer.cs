@@ -9,8 +9,8 @@ using SillyWonko.Data;
 namespace SillyWonko.Migrations
 {
     [DbContext(typeof(WonkoDbContext))]
-    [Migration("20180711170355_initial")]
-    partial class initial
+    [Migration("20180714220032_warehouse")]
+    partial class warehouse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,16 +43,16 @@ namespace SillyWonko.Migrations
                     b.ToTable("Products");
 
                     b.HasData(
-                        new { ID = 1, Description = "description", Image = "", Name = "product1", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 2, Description = "description", Image = "", Name = "product2", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 3, Description = "description", Image = "", Name = "product3", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 4, Description = "description", Image = "", Name = "product4", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 5, Description = "description", Image = "", Name = "product5", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 6, Description = "description", Image = "", Name = "product6", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 7, Description = "description", Image = "", Name = "product7", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 8, Description = "description", Image = "", Name = "product8", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 9, Description = "description", Image = "", Name = "product9", Price = 9.99m, Sku = "ABCD0001" },
-                        new { ID = 10, Description = "description", Image = "", Name = "product10", Price = 9.99m, Sku = "ABCD0001" }
+                        new { ID = 1, Description = "description", Image = "image/candy_one.jpg", Name = "product1", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 2, Description = "description", Image = "image/candy_two.jpg", Name = "product2", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 3, Description = "description", Image = "image/candy_three.jpg", Name = "product3", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 4, Description = "description", Image = "image/candy_four.jpg", Name = "product4", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 5, Description = "description", Image = "image/candy_five.jpg", Name = "product5", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 6, Description = "description", Image = "image/candy_six.jpg", Name = "product6", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 7, Description = "description", Image = "image/candy_sevn.jpg", Name = "product7", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 8, Description = "description", Image = "image/candy_eight.jpg", Name = "product8", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 9, Description = "description", Image = "image/candy_nine.jpg", Name = "product9", Price = 9.99m, Sku = "ABCD0001" },
+                        new { ID = 10, Description = "description", Image = "image/candy_ten.jpg", Name = "product10", Price = 9.99m, Sku = "ABCD0001" }
                     );
                 });
 #pragma warning restore 612, 618
