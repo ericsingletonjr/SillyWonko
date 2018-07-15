@@ -108,7 +108,7 @@ namespace SillyWonko.Controllers
 
                     await _signInManager.SignInAsync(user, false);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Shop");
                 }
             }
             return View(rvm);

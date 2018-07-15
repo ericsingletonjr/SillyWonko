@@ -17,7 +17,11 @@
         }
         <ul>
             <li>Home</li>
-            <a asp-action="Index" asp-controller="Shop"><li>Products</li></a>
+            @if (User.IsInRole(ApplicationRoles.Administrator))
+            {
+            <li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
+            }
+            <li><a asp-action="Index" asp-controller="Shop">Products</a></li>
             <li>Cart</li>
         </ul>
 
