@@ -15,10 +15,14 @@
             <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
             <p>@User.Identity.Name</p>
         }
-        <ul>
-            <a asp-action="Index" asp-controller="Shop"><li>Products</li></a>
-            <li>Cart</li>
-        </ul>
+            <ul>
+                @if (User.IsInRole(ApplicationRoles.Administrator))
+                {
+                    <li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
+                }
+                <li><a asp-action="Index" asp-controller="Shop">Products</a></li>
+                <li>Cart</li>
+            </ul>
 
         @if (!SignInManager.IsSignedIn(User))
         {
@@ -52,7 +56,7 @@
     <div class="product_cell">
         <img class="product_image" src="~/@Model.Product.Image" />
     </div>
-    @Model.Product.Name
-    @Model.Product.Description
-    @Model.Product.Price
+    <p>@Model.Product.Name</p>
+    <p>@Model.Product.Description</p>
+    <p>Cost: @Model.Product.Price</p>
 </main>
