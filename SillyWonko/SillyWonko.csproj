@@ -33,7 +33,7 @@
     <Content Update="Views\Shared\_Home.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Shop\_ViewStart.cshtml">
+    <Content Update="Views\Shared\_Detail.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

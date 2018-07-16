@@ -40,9 +40,9 @@ namespace SillyWonko
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                     options.UseSqlServer(Configuration.GetConnectionString("IdentityProd")));
+                     options.UseSqlServer(Configuration.GetConnectionString("IdentityLocal")));
 
-            //Sets up identity services
+            // Sets up identity services.
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
@@ -57,7 +57,7 @@ namespace SillyWonko
                 options.AddPolicy("Bronze", policy => policy.Requirements.Add(new CricketRequirement("Bronze Cricket Member")));
             });
 
-            //services.AddTransient<IEmailSender, EmailSender>();
+            // services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<IAuthorizationHandler, EmployeeEmailHandler>();
             services.AddSingleton<IAuthorizationHandler, CricketHandler>();
 

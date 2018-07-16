@@ -32,7 +32,7 @@ namespace SillyWonko.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Detail(int? id)
         {
             UserViewModel uvm = new UserViewModel();
             if (id.HasValue)

@@ -2,73 +2,26 @@
 @using Microsoft.AspNetCore.Identity;
 @using System.Security.Claims;
 @using SillyWonko.Models;
-
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
-<nav>
-    <section class="nav_identity">
-        @if (TempData["LogOut"] != null)
-        {<p>@TempData["LogOut"]</p>}
-
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
-            <p>@User.Identity.Name</p>
-        }
-        <ul>
-            <li>Home</li>
-            @if (User.IsInRole(ApplicationRoles.Administrator))
-            {
-            <li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
-            }
-            <li><a asp-action="Index" asp-controller="Shop">Products</a></li>
-            <li>Cart</li>
-        </ul>
-
-        @if (!SignInManager.IsSignedIn(User))
-        {
-            
-        <form method="post" asp-controller="Account" asp-action="Login">
-            <input type="text" asp-for="Login.Email" placeholder="email" />
-            <br />
-            <input type="password" asp-for="Login.Password" placeholder="password" />
-            <br />
-            <input type="submit" value="login" />
-            <a asp-controller="Account" asp-action="Register">or Register</a>
-        </form>
-        }
-        else
-        {
-            <form asp-controller="Account" asp-action="LogOut">
-                <input type="submit" value="logout" />
-            </form>
-        }
-        <div id="menu_indicator">
-            <p id="menu_tag">Menu</p>
-            <div id="menu_triangle"></div>
-        </div>
-    </section>
-</nav>
+@{
+	Layout = "_Main";
+}
 
 <main class="main_container">
-
-    <header>
-
-        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
-        <p id="main_subheading">A most <span>curious </span> shoppe</p>
-    </header>
-    <section class="product_grid">
-
-        @foreach (var product in Model.Products)
-        {
-            <div class="product_cell">
-                <a href="@Url.Action($"Details/{product.ID}","Shop")">
-                    <img class="product_image" src="~/@product.Image" />
-                </a>
-                <p class="product_name">@product.Name</p>
-
-            </div>
-        }
-
-    </section>
+	<header>
+		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+		<p id="main_subheading">A most <span>curious </span> shoppe</p>
+	</header>
+	<section class="product_grid">
+		@foreach (var product in Model.Products)
+		{
+			<div class="product_cell">
+				<a href="@Url.Action($"Detail/{product.ID}","Shop")">
+					<img class="product_image" src="~/@product.Image" />
+				</a>
+				<p class="product_name">@product.Name</p>
+			</div>
+		}
+	</section>
 </main>
