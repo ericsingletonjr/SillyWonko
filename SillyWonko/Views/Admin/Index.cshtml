@@ -15,6 +15,6 @@
     <p>List of products</p>
     @foreach(var product in Model.Products)
     {
-        <a asp-controller="Admin" asp-action="Details" asp-route-id="@product.ID">@product.Name</a>
+        <a asp-controller="Admin" asp-action="Detail" asp-route-id="@product.ID">@product.Name</a>
     }
 </section>
