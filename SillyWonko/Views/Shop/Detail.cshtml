@@ -1,0 +1,30 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@using SillyWonko.Models;
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@{ 
+	Layout = "_Detail";
+}
+
+<main class="main_container">
+    <header>
+        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+    </header>
+	<div class="product_detail">
+		<section id="product_wrapper">
+			<div class="product_cell">
+				<img class="product_image" src="~/@Model.Product.Image" />
+			</div>
+			<div id="detail_card">
+				<p id="detail_name">@Model.Product.Name</p>
+				<p id="detail_description">@Model.Product.Description</p>
+				<p id="detail_price">$@Model.Product.Price</p>
+			<form asp-action="Index" asp-controller="Shop" method="get">
+				<input id="detail_button" value="I Want It" type="submit" />
+			</form>
+			</div>
+		</section>
+	</div>
+</main>
