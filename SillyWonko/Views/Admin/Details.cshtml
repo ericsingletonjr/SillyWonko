@@ -10,7 +10,7 @@
     <label asp-for="Price">@Model.Price</label>
     <input type="number" asp-for="Price" />
     <br />
-    <label asp-for="Description">@Model.Description</label>
+    <label asp-for="Description">Description</label>
     <input type="text" asp-for="Description" />
     <br />
     <label asp-for="Image">@Model.Image</label>
@@ -20,4 +20,7 @@
 </form>
 <form asp-controller="Admin" asp-action="Delete" asp-route-id="@Model.ID">
     <input type="submit" value="remove" />
+</form>
+<form asp-controller="Admin" asp-action="Index">
+    <input type="submit" value="Dashboard" />
 </form>
