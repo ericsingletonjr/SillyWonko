@@ -1,7 +1,7 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
 <section>
-    <form asp-controller="Admin" asp-action="Create">
+    <form method="get" asp-controller="Admin" asp-action="Create">
         <input type="submit" value="Add New Product" />
     </form>
     <form asp-controller="Shop" asp-action="Index">
@@ -15,6 +15,6 @@
     <p>List of products</p>
     @foreach(var product in Model.Products)
     {
-        <a asp-controller="Admin" asp-action="Detail" asp-route-id="@product.ID">@product.Name</a>
+        <a asp-controller="Admin" asp-action="Details" asp-route-id="@product.ID">@product.Name</a>
     }
 </section>

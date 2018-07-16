@@ -1,24 +1,24 @@
-﻿@model SillyWonko.Models.Product
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
-<form method="post" asp-controller="Admin" asp-action="Update" asp-route-id="@Model.ID">
-    <label asp-for="Name">@Model.Name</label>
-    <input type="text" asp-for="Name" />
+<form method="post" asp-controller="Admin" asp-action="Update" asp-route-id="@Model.Product.ID">
+    <label asp-for="@Model.Product.Name">@Model.Product.Name</label>
+    <input type="text" asp-for="@Model.Product.Name" />
     <br />
-    <label asp-for="Sku">@Model.Sku</label>
-    <input type="text" asp-for="Sku" />
+    <label asp-for="@Model.Product.Sku">@Model.Product.Sku</label>
+    <input type="text" asp-for="@Model.Product.Sku" />
     <br />
-    <label asp-for="Price">@Model.Price</label>
-    <input type="number" asp-for="Price" />
+    <label asp-for="@Model.Product.Price">@Model.Product.Price</label>
+    <input type="number" asp-for="@Model.Product.Price" />
     <br />
-    <label asp-for="Description">Description</label>
-    <input type="text" asp-for="Description" />
+    <label asp-for="@Model.Product.Description">Description</label>
+    <input type="text" asp-for="@Model.Product.Description" />
     <br />
-    <label asp-for="Image">@Model.Image</label>
-    <input type="text" asp-for="Image" />
+    <label asp-for="@Model.Product.Image">@Model.Product.Image</label>
+    <input type="text" asp-for="@Model.Product.Image" />
     <br />
     <input type="submit" value="update" />
 </form>
-<form asp-controller="Admin" asp-action="Delete" asp-route-id="@Model.ID">
+<form asp-controller="Admin" asp-action="Delete" asp-route-id="@Model.Product.ID">
     <input type="submit" value="remove" />
 </form>
 <form asp-controller="Admin" asp-action="Index">
