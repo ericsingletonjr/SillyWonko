@@ -38,7 +38,7 @@ namespace SillyWonko.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return View(new RegisterViewModel());
+            return View(new UserViewModel());
         }
 
         /// <summary>
@@ -50,8 +50,10 @@ namespace SillyWonko.Controllers
         /// <returns>Redirect to home if successful or register if model is invalid</returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel rvm)
+        public async Task<IActionResult> Register(UserViewModel uvm)
         {
+            RegisterViewModel rvm = uvm.Register;
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -111,7 +113,7 @@ namespace SillyWonko.Controllers
                     return RedirectToAction("Index", "Shop");
                 }
             }
-            return View(rvm);
+            return View(uvm);
         }
 
         [HttpGet]

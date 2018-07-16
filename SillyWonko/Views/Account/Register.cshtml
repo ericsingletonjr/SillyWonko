@@ -1,28 +1,28 @@
-﻿@model SillyWonko.Models.ViewModels.RegisterViewModel
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
 Register Page
 
 <form method="post" asp-action="Register">
     <div asp-validation-summary="All"></div>
 
-    <label asp-for="FirstName">First Name</label>
-    <input type="text" asp-for="FirstName" />
+    <label asp-for="@Model.Register.FirstName">First Name</label>
+    <input type="text" asp-for="@Model.Register.FirstName" />
     <br />
 
-    <label asp-for="LastName">Last Name</label>
-    <input type="text" asp-for="LastName" />
+    <label asp-for="@Model.Register.LastName">Last Name</label>
+    <input type="text" asp-for="@Model.Register.LastName" />
     <br />
 
-    <label asp-for="Email">Email</label>
-    <input type="text" asp-for="Email" />
+    <label asp-for="@Model.Register.Email">Email</label>
+    <input type="text" asp-for="@Model.Register.Email" />
     <br />
 
-    <label asp-for="Password">Password</label>
-    <input type="password" asp-for="Password" />
+    <label asp-for="@Model.Register.Password">Password</label>
+    <input type="password" asp-for="@Model.Register.Password" />
     <br />
 
-    <label asp-for="ConfirmPassword">Confirm Password</label>
-    <input type="password" asp-for="ConfirmPassword" />
+    <label asp-for="@Model.Register.ConfirmPassword">Confirm Password</label>
+    <input type="password" asp-for="@Model.Register.ConfirmPassword" />
     <br />
 
     <input type="submit" value="register user" />

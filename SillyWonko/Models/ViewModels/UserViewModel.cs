@@ -10,6 +10,7 @@ namespace SillyWonko.Models.ViewModels
     {
         public ApplicationUser User { get; set; }
         public LoginViewModel Login { get; set; }
+        public RegisterViewModel Register { get; set; }
         public Product Product { get; set; }
         public IEnumerable<Claim> Claims { get; set; }
         public IEnumerable<Product> Products { get; set; }
