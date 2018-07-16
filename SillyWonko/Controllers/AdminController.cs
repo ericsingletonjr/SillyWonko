@@ -34,35 +34,36 @@ namespace SillyWonko.Controllers
         [Authorize(Policy = "AdminOnly")]
         public IActionResult Create()
         {
-            return View(new Product());
+            return View(new UserViewModel());
         }
 
         [HttpPost]
         [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(UserViewModel uvm)
         {
             if (ModelState.IsValid)
             {
-                HttpStatusCode response = await _context.CreateProduct(product);
+                HttpStatusCode response = await _context.CreateProduct(uvm.Product);
                 if (response == HttpStatusCode.Created)
                 {
                     return RedirectToAction("Index", "Admin");
                 }
-                return View(product);
+                return View(uvm.Product);
             }
-            return View(product);
+            return View(uvm.Product);
         }
 
         [HttpGet]
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int? id)
         {
+            UserViewModel uvm = new UserViewModel();
             if (id.HasValue)
             {
-                Product product = await _context.GetProductByID(id.Value);
-                if(product != null)
+                uvm.Product = await _context.GetProductByID(id.Value);
+                if(uvm.Product != null)
                 {
-                    return View(product);
+                    return View(uvm);
                 }
                 return RedirectToAction("Index", "Admin");
             }
@@ -73,12 +74,14 @@ namespace SillyWonko.Controllers
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Update(int? id, [Bind("ID,Name,Sku,Image,Price,Description")]Product product)
         {
+            UserViewModel uvm = new UserViewModel();
+            uvm.Product = product;
             if (id.HasValue)
             {
-                var updated = await _context.UpdateProduct(id.Value, product);
+                var updated = await _context.UpdateProduct(id.Value, uvm.Product);
                 return RedirectToAction("Index", "Admin");
             }
-            return View(product);
+            return View(uvm.Product);
         }
 
         [HttpPost]
