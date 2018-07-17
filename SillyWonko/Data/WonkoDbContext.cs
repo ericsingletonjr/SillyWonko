@@ -15,6 +15,8 @@ namespace SillyWonko.Data
 		}
 
 		public DbSet<Product> Products { get; set; }
+		public DbSet<Cart> Carts { get; set; }
+		public DbSet<CartItem> CartItems { get; set; }
 
         /// <summary>
         /// Method that is part of DbContext. We override it to fill in
