@@ -5,7 +5,7 @@
 
 html 
 {
-	height: 100%;
+	min-height: 100%;
 	min-width: 20rem;
 }
 
@@ -27,6 +27,11 @@ p {
 	font-size: 1.2rem;
 }
 
+.main_container {
+	margin: 0 auto;
+	max-width: 80rem;
+}
+
 nav 
 {
 	text-transform: uppercase;
@@ -39,9 +44,9 @@ nav
 	padding-left: 2rem;
 	padding-right: 2rem;
 	height: 100%;
-	-webkit-transition: all 1s ease-in-out;
-	-moz-transition: all 1s ease-in-out;
-	-o-transition: all 1s ease-in-out;
+	-webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
 	z-index: 1;
 }
 
@@ -92,8 +97,13 @@ nav
 		font-size: .75rem;
 	}
 
-#menu_tag 
-{
+	nav #register_link 
+	{
+		margin-top: .75rem;
+		display: block;
+	}
+
+#menu_tag {
 	position: absolute;
 	right: 0;
 	top: 2rem;
@@ -102,6 +112,10 @@ nav
 	-webkit-transform: rotate(-90deg);
 	-moz-transform: rotate(-90deg);
 	-ms-transform: rotate(-90deg);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 	#menu_triangle 
@@ -118,7 +132,8 @@ nav
 
 header 
 {
-	margin-left: 2rem;
+	max-width: 100%;
+	margin: 0 auto 0 2rem;
 	font-family: 'Roboto Condensed';
 	font-weight: 300;
 	text-align: center;
@@ -127,10 +142,10 @@ header
 
 	header #main_logo 
 	{
-		padding-top: 1.2rem;
+		padding-top: 1rem;
 		display: block;
 		width: 10rem;
-		margin: 0 auto 1.2rem;
+		margin: 0 auto 1rem;
 		clear: right;
 	}
 
@@ -178,12 +193,6 @@ form input[type=submit]
 		display: none;
 	}
 
-.main_container 
-{
-	margin: 0 auto;
-	max-width: 80rem;
-}
-
 .product_grid 
 {
 	font-size: 0;
@@ -211,6 +220,15 @@ form input[type=submit]
 	display: block;
 	margin: 0 auto;
 	width: 90%;
+}
+
+.product_cell:hover 
+{
+	transform: rotate(-.5deg) scale(1.025);
+	-webkit-transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	opacity: .85;
 }
 
 .product_name

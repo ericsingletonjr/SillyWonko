@@ -152,7 +152,7 @@ namespace SillyWonko.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Whoops try again");
+                    ModelState.AddModelError(string.Empty, "Whoops, try again.");
                 }
             }
             return View(uvm);
