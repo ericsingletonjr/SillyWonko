@@ -1,4 +1,6 @@
-﻿using SillyWonko.Models.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SillyWonko.Data;
+using SillyWonko.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,29 @@ namespace SillyWonko.Models
 {
 	public class CartService : ICartService
 	{
-		public Task<HttpStatusCode> CreateCart(Cart cart)
+		private WonkoDbContext _context;
+
+		public CartService(WonkoDbContext context)
 		{
-			throw new NotImplementedException();
+			_context = context;
 		}
 
-		public Task<HttpStatusCode> CreateCartItem(CartItem cartItem)
+		public async Task<HttpStatusCode> CreateCart(ApplicationUser user)
 		{
-			throw new NotImplementedException();
+			Cart cart = new Cart
+			{
+				UserID = user.Id
+			};
+			await _context.Carts.AddAsync(cart);
+			await _context.SaveChangesAsync();
+			return HttpStatusCode.Created;
+		}
+
+		public async Task<HttpStatusCode> CreateCartItem(CartItem cartItem)
+		{
+			await _context.CartItems.AddAsync(cartItem);
+			await _context.SaveChangesAsync();
+			return HttpStatusCode.Created;
 		}
 
 		public Task<HttpStatusCode> DeleteCart(int id)
@@ -24,9 +41,16 @@ namespace SillyWonko.Models
 			throw new NotImplementedException();
 		}
 
-		public Task<HttpStatusCode> DeleteCartItem(int id)
+		public async Task<HttpStatusCode> DeleteCartItem(int id)
 		{
-			throw new NotImplementedException();
+			var cartItem = await _context.CartItems.FindAsync(id);
+			if (cartItem == null)
+			{
+				return HttpStatusCode.BadRequest;
+			}
+			_context.CartItems.Remove(cartItem);
+			await _context.SaveChangesAsync();
+			return HttpStatusCode.OK;
 		}
 
 		public Task<List<Cart>> GetAllCarts()
@@ -34,12 +58,13 @@ namespace SillyWonko.Models
 			throw new NotImplementedException();
 		}
 
-		public Task<Cart> GetCart(int id)
+		public async Task<Cart> GetCart(int id)
 		{
-			throw new NotImplementedException();
+			var cart = await _context.Carts.FindAsync(id);
+			return cart;
 		}
 
-		public Task<List<CartItem>> GetCartItems()
+		public Task<List<CartItem>> GetCartItems(int id)
 		{
 			throw new NotImplementedException();
 		}

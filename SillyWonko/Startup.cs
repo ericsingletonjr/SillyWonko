@@ -35,6 +35,7 @@ namespace SillyWonko
         {
             services.AddMvc();
             services.AddScoped<IWarehouse, DevWarehouse>();
+			services.AddScoped<ICartService, CartService>();
 
 			services.AddDbContext<WonkoDbContext>(options => 
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
