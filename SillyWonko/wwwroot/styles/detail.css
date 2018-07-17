@@ -45,9 +45,9 @@ nav
 	padding-left: 2rem;
 	padding-right: 2rem;
 	height: 100%;
-	-webkit-transition: all 1s ease-in-out;
-	-moz-transition: all 1s ease-in-out;
-	-o-transition: all 1s ease-in-out;
+	-webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
 	z-index: 1;
 }
 
@@ -96,6 +96,12 @@ nav
 		margin: 0;
 		color: rgb(144, 4, 4);
 		font-size: .75rem;
+	}
+
+	nav #register_link 
+	{
+		margin-top: .75rem;
+		display: block;
 	}
 
 #menu_tag 

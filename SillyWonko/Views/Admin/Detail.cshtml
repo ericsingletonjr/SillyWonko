@@ -1,0 +1,26 @@
+﻿@model SillyWonko.Models.Product
+
+<form method="post" asp-controller="Admin" asp-action="Update" asp-route-id="@Model.ID">
+    <label asp-for="Name">@Model.Name</label>
+    <input type="text" asp-for="Name" />
+    <br />
+    <label asp-for="Sku">@Model.Sku</label>
+    <input type="text" asp-for="Sku" />
+    <br />
+    <label asp-for="Price">@Model.Price</label>
+    <input type="number" asp-for="Price" />
+    <br />
+    <label asp-for="Description">Description</label>
+    <input type="text" asp-for="Description" />
+    <br />
+    <label asp-for="Image">@Model.Image</label>
+    <input type="text" asp-for="Image" />
+    <br />
+    <input type="submit" value="update" />
+</form>
+<form asp-controller="Admin" asp-action="Delete" asp-route-id="@Model.ID">
+    <input type="submit" value="remove" />
+</form>
+<form asp-controller="Admin" asp-action="Index">
+    <input type="submit" value="Dashboard" />
+</form>
