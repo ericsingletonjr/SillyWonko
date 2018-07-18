@@ -224,14 +224,23 @@ form input[type=submit]
 
 .product_cell:hover 
 {
-	transform: rotate(-.5deg) scale(1.025);
+	transform: scale(1.025);
 	-webkit-transition: all .1s ease-in-out;
 	-moz-transition: all .1s ease-in-out;
 	-o-transition: all .1s ease-in-out;
+}
+
+.product_cell:hover .product_image 
+{
 	opacity: .85;
 }
 
-.product_name
+.product_cell:hover > .product_price 
+{
+	visibility: visible;
+}
+
+.product_name 
 {
 	text-transform: uppercase;
 	font-weight: 700;
@@ -242,6 +251,22 @@ form input[type=submit]
 	bottom: 5%;
 	text-align: center;
 	margin: auto;
+}
+
+.product_price {
+	cursor: pointer;
+	visibility: hidden;
+	font-size: 1.5rem;
+	font-weight: 700;
+	background: rgb(255, 67, 67);
+	color: rgb(255, 255, 255);
+	position: absolute;
+	top: 9.75rem;
+	width: 5rem;
+	height: 3rem;
+	line-height: 3rem;
+	text-align: center;
+	box-shadow: 0 0 .5rem rgba(0, 0, 0, .25);
 }
 
 /* TABLET */

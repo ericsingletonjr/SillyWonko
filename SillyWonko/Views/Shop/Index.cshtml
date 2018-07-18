@@ -16,12 +16,13 @@
 	<section class="product_grid">
 		@foreach (var product in Model.Products)
 		{
-			<div class="product_cell">
-				<a href="@Url.Action($"Detail/{product.ID}","Shop")">
-					<img class="product_image" src="~/@product.Image" />
-				</a>
-				<p class="product_name">@product.Name</p>
-			</div>
+		<div class="product_cell">
+			<a href="@Url.Action($"Detail/{product.ID}","Shop")">
+				<img class="product_image" src="~/@product.Image" />
+			</a>
+			<p class="product_name">@product.Name</p>
+			<p class="product_price">$@Convert.ToInt32(product.Price)</p>
+		</div>
 		}
 	</section>
 </main>
