@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using SillyWonko.Models;
+using SillyWonko.Models.Interfaces;
 using SillyWonko.Models.ViewModels;
 
 namespace SillyWonko.Controllers
@@ -17,16 +18,19 @@ namespace SillyWonko.Controllers
     {
         private UserManager<ApplicationUser> _userManager { get; set; }
         private SignInManager<ApplicationUser> _signInManager { get; set; }
+        private ICartService _cart;
         /// <summary>
         /// Setting up our user creation system with identity
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         public AccountController(UserManager<ApplicationUser> userManager,
-                                 SignInManager<ApplicationUser> signInManager)
+                                 SignInManager<ApplicationUser> signInManager,
+                                 ICartService cart)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _cart = cart;
         }
 
         public IActionResult Index()
@@ -67,6 +71,8 @@ namespace SillyWonko.Controllers
 
                 if (result.Succeeded)
                 {
+                    await _cart.CreateCart(user);
+                    
                     List<Claim> Claims = new List<Claim>();
                     Random random = new Random();
                     int randNum = random.Next(1, 16);

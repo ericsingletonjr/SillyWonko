@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SillyWonko.Data;
 
 namespace SillyWonko.Migrations
 {
     [DbContext(typeof(WonkoDbContext))]
-    partial class WonkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180718172759_add-productid")]
+    partial class addproductid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
