@@ -1,0 +1,12 @@
+﻿@model List<SillyWonko.Models.CartItem>
+
+<div class="view_component">
+	@foreach (var item in Model)
+	{
+		<div class="vc_item">
+			<p id="vc_name">@item.Product.Name</p>
+			<p id="vc_price">@item.Product.Price</p>
+			<p id="vc_quantity">@item.Quantity</p>
+		</div>	
+	}
+</div>

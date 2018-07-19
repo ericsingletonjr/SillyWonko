@@ -130,6 +130,42 @@ nav #register_link
 	border-right: .5rem solid rgb(255, 255, 255);
 }
 
+.vc_item {
+	position: relative;
+	background: rgb(255, 255, 255);
+	color: rgb(255, 67, 67);
+	padding: 1rem;
+	margin-top: .05rem;
+	box-shadow: 0 0 .5rem rgba(0, 0, 0, .15);
+}
+
+#vc_name
+{
+	display: inline-block;
+	margin: 0;
+}
+
+#vc_price
+{
+	display: inline-block;
+	font-size: inherit;
+	color: rgb(128, 128, 128);
+	margin: 0;
+}
+
+#vc_quantity
+{
+	position: absolute;
+	right: .5rem;
+	bottom: .4rem;
+	height: 75%;
+	display: inline-block;
+	background: rgb(255, 67, 67);
+	color: rgb(255, 255, 255);
+	padding: .5rem;
+	margin: 0 0 0 .5rem;
+}
+
 header 
 {
 	max-width: 100%;
