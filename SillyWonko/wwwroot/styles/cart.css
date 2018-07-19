@@ -150,14 +150,20 @@ nav #register_link
 	position: relative;
 	background: rgb(255, 255, 255);
 	color: rgb(255, 67, 67);
-	padding: 1rem;
+	padding: .75rem;
 	margin-top: .05rem;
 	box-shadow: 0 0 .5rem rgba(0, 0, 0, .15);
 }
 
+#vc_heading 
+{
+	color: rgb(144, 4, 4);
+	margin-bottom: .5rem;
+}
+
 #vc_name 
 {
-	display: inline-block;
+	display: block;
 	margin: 0;
 }
 
@@ -165,20 +171,21 @@ nav #register_link
 {
 	display: inline-block;
 	font-size: inherit;
-	color: rgb(128, 128, 128);
+	color: rgb(144, 4, 4);
 	margin: 0;
 }
 
 #vc_quantity 
 {
 	position: absolute;
-	right: .5rem;
-	bottom: .4rem;
-	height: 75%;
+	right: 0;
+	height: 50%;
+	min-width: 17%;
 	display: inline-block;
+	text-align: center;
 	background: rgb(255, 67, 67);
 	color: rgb(255, 255, 255);
-	padding: .5rem;
+	padding: 2.5%;
 	margin: 0 0 0 .5rem;
 }
 
