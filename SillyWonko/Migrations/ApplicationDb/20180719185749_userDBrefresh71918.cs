@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SillyWonko.Migrations.ApplicationDb
 {
-    public partial class userDb : Migration
+    public partial class userDBrefresh71918 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
