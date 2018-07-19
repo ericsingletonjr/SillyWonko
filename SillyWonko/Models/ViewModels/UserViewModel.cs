@@ -13,6 +13,7 @@ namespace SillyWonko.Models.ViewModels
         public RegisterViewModel Register { get; set; }
         public Product Product { get; set; }
         public CartItem CartItem { get; set; }
+        public Cart Cart { get; set; }
         public IEnumerable<Claim> Claims { get; set; }
         public IEnumerable<Product> Products { get; set; }
     }
