@@ -38,20 +38,23 @@
 			@if (!SignInManager.IsSignedIn(User))
 			{
 
-			<form method="post" asp-controller="Account" asp-action="Login">
-				<div class="no_autocomplete">
-					<input type="password" />
-				</div>
-				<input type="text" asp-for="Login.Email" placeholder="email" />
-				<br />
-				<input type="password" asp-for="Login.Password" placeholder="password" />
-				<br />
-				<input id="nav_button" type="submit" value="login" />
-				<a id="register_link" asp-controller="Account" asp-action="Register">Not Registered?</a>
-			</form>
+				<form method="post" asp-controller="Account" asp-action="Login">
+					<div class="no_autocomplete">
+						<input type="password" />
+					</div>
+					<input type="text" asp-for="Login.Email" placeholder="email" />
+					<br />
+					<input type="password" asp-for="Login.Password" placeholder="password" />
+					<br />
+					<input id="nav_button" type="submit" value="login" />
+					<a id="register_link" asp-controller="Account" asp-action="Register">Not Registered?</a>
+				</form>
 			}
 			else
 			{
+				<div>
+					@await Component.InvokeAsync("CartView", User.Identity.Name)
+				</div>
 				<form asp-controller="Account" asp-action="LogOut">
 					<input id="nav_button" type="submit" value="logout" />
 				</form>
