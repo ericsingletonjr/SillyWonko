@@ -1,0 +1,13 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+
+<h2>External</h2>
+
+<form asp-action="ExternalLoginConfirmation" method="post">
+    <label asp-for="@Model.User.FirstName"></label>
+    <input asp-for="@Model.User.FirstName" />
+    <label asp-for="@Model.User.LastName"></label>
+    <input asp-for="@Model.User.LastName" />
+    <label asp-for="@Model.External.Email"></label>
+    <input asp-for="@Model.External.Email" />
+    <input type="submit" value="Register" />
+</form>

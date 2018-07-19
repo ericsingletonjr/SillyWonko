@@ -163,6 +163,128 @@ namespace SillyWonko.Controllers
             }
             return View(uvm);
         }
+        /// <summary>
+        /// Action that makes the first call towards the given provider.
+        /// It will link to the appropriate third-party signin
+        /// </summary>
+        /// <param name="provider">Name of the provider</param>
+        /// <returns>a challenge</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ExternalLogin(string provider)
+        {
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallBack), "Account");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+        /// <summary>
+        /// Action that is our callback function. This will
+        /// get the email information from the third-party response
+        /// and populate a form with an email.
+        /// </summary>
+        /// <param name="remoteError">If it isn't null, an error has occurred</param>
+        /// <returns>Different redirects based on result</returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginCallBack(string remoteError = null)
+        {
+            if(remoteError != null)
+            {
+                TempData["Error"] = "Seems to be an error from the provider";
+                return RedirectToAction(nameof(Login));
+            }
+
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if(info == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false, true);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Shop");
+            }
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            ExternalLoginViewModel elvm = new ExternalLoginViewModel
+            {
+                Email = email
+            };
+            return View("ExternalLogin", new UserViewModel { External = elvm });
+            
+        }
+        /// <summary>
+        /// Action that allow us to create a user from the given third-party information.
+        /// We can create claims, membership and a cart that will associate with
+        /// this new user account.
+        /// </summary>
+        /// <param name="uvm">UserViewModel</param>
+        /// <returns>Redirect to views based on result</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginConfirmation(UserViewModel uvm)
+        {
+            if (ModelState.IsValid)
+            {
+                var info = await _signInManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    TempData["Error"] = "Seems to be an issue";
+                }
+
+                var user = new ApplicationUser {
+                    UserName = uvm.External.Email,
+                    Email = uvm.External.Email,
+                    FirstName = uvm.User.FirstName,
+                    LastName = uvm.User.LastName
+                };
+
+                await _cart.CreateCart(user);
+
+                List<Claim> Claims = new List<Claim>();
+                Random random = new Random();
+                int randNum = random.Next(1, 16);
+
+                if (randNum % 15 == 0)
+                {
+                    Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
+                    Claims.Add(buzzyFizz);
+                }
+                if (randNum % 5 == 0)
+                {
+                    Claim fizzy = new Claim("BuzzyFizz", "Silver Cricket Member");
+                    Claims.Add(fizzy);
+                }
+                if (randNum % 3 == 0)
+                {
+                    Claim buzzy = new Claim("BuzzyFizz", "Bronze Cricket Member");
+                    Claims.Add(buzzy);
+                }
+
+                Claim nameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+                Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                Claims.Add(nameClaim);
+                Claims.Add(emailClaim);
+
+
+                var result = await _userManager.CreateAsync(user);
+                await _userManager.AddClaimsAsync(user, Claims);
+                await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+
+                if (result.Succeeded)
+                {
+                    result = await _userManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Shop");
+                    }
+                }
+            }
+            return RedirectToAction(nameof(ExternalLoginCallBack), uvm);
+        }
 
         [Route("/logout")]
         public async Task<IActionResult> LogOut()

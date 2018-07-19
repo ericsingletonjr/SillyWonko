@@ -48,6 +48,12 @@ namespace SillyWonko
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = Configuration["OAUTH:Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["OAUTH:Authentication:Google:ClientSecret"];
+            });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
