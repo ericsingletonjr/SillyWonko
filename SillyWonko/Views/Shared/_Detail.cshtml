@@ -52,12 +52,12 @@
 			}
 			else
 			{
-				<form asp-controller="Account" asp-action="LogOut">
-					<input id="nav_button" type="submit" value="logout" />
-				</form>
 				<div>
 					@await Component.InvokeAsync("CartView", User.Identity.Name)
 				</div>
+				<form asp-controller="Account" asp-action="LogOut">
+					<input id="nav_button" type="submit" value="logout" />
+				</form>
 			}
 			<div id="menu_indicator">
 				<p id="menu_tag">Menu</p>
