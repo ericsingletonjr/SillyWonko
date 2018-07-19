@@ -30,6 +30,9 @@
     <Content Update="Views\Home\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_Cart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_Admin.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

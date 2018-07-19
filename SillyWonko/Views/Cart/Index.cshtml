@@ -1,0 +1,47 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+@*<main class="main_container">
+        <header>
+            <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+        </header>
+
+        @foreach (var item in Model.Cart.CartItems)
+        {
+
+            <p>@item.Product.Name</p>
+        }
+    </main>*@
+<main class="main_container">
+    <header>
+        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+    </header>
+    <div class="inventory_list">
+        <section id="list_wrapper">
+            <p id="detail_name">Your Cart</p>
+
+            @foreach (var product in Model.Cart.CartItems)
+            {
+                <div id="list_item">
+                    <form asp-action="Detail" asp-controller="Shop" asp-route-id="@product.Product.ID" method="get">
+                        <input id="item_name" value="@product.Product.Name" type="submit" />
+                        <div class="item_info">
+                            <img class="item_image" src="@product.Product.Image" alt="@product.Product.Name" />
+                            <div class="mini_wrapper">
+                                <p>Qty</p>
+                                <p id="item_quantity">@product.Quantity</p>
+                            </div>
+                            <div class="mini_wrapper">
+                                <p>Price</p>
+                                <p id="item_price">@product.Product.Price</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+
+            @*<form method="get" asp-controller="Admin" asp-action="Create">
+                    <input type="submit" value="Add New Product" />
+                </form>*@
+
+        </section>
+    </div>
+</main>
