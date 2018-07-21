@@ -87,13 +87,14 @@ namespace SillyWonko.Models
 			return HttpStatusCode.OK;
 		}
         /// <summary>
-        /// Action to grab a list of all carts 
-        /// NOT IMPLEMENTED YET
+        /// Action to grab a list of all carts,
+        /// for admin purposes
         /// </summary>
-        /// <returns></returns>
-		public Task<List<Cart>> GetAllCarts()
+        /// <returns>List of carts</returns>
+		public async Task<List<Cart>> GetAllCarts()
 		{
-			throw new NotImplementedException();
+            var carts = await _context.Carts.ToListAsync();
+            return carts;
 		}
         /// <summary>
         /// Action that allows us to get a cart based off of a specific id
@@ -118,15 +119,22 @@ namespace SillyWonko.Models
             return cartItems;
 		}
         /// <summary>
-        /// Action to update cart
-        /// NOT IMPLEMENTED YET
+        /// Action to update a specific cart for admin purposes
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cart"></param>
-        /// <returns></returns>
-		public Task<Cart> UpdateCart(int id, Cart cart)
+        /// <param name="id">Id of specific cart</param>
+        /// <param name="cart">New cart information</param>
+        /// <returns>Updated Cart</returns>
+		public async Task<Cart> UpdateCart(int id, Cart cart)
 		{
-			throw new NotImplementedException();
+            var previousCart = await _context.Carts.FindAsync(id);
+            if(previousCart != null)
+            {
+                cart.ID = previousCart.ID;
+                _context.Carts.Update(cart);
+                await _context.SaveChangesAsync();
+                return cart;
+            }
+            return cart;
 		}
         /// <summary>
         /// Action that allows us to take in a cart item
