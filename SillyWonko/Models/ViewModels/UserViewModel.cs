@@ -12,10 +12,15 @@ namespace SillyWonko.Models.ViewModels
         public LoginViewModel Login { get; set; }
         public ExternalLoginViewModel External { get; set; }
         public RegisterViewModel Register { get; set; }
+
+        public Order Order { get; set; }
         public Product Product { get; set; }
         public CartItem CartItem { get; set; }
         public Cart Cart { get; set; }
+        public decimal Total { get; set; }
+
         public IEnumerable<Claim> Claims { get; set; }
         public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<SoldProduct> SoldProducts { get; set; }
     }
 }

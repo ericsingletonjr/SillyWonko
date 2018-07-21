@@ -12,7 +12,5 @@ namespace SillyWonko.Models
         public int ProductID { get; set; }
         public int OrderID { get; set; }
         public int Quantity { get; set; }
-        [Display(Name = "Total Price")]
-        public decimal TotalPrice { get; set; }
     }
 }

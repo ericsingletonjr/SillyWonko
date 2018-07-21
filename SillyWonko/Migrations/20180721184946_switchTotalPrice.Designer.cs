@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SillyWonko.Data;
 
 namespace SillyWonko.Migrations
 {
     [DbContext(typeof(WonkoDbContext))]
-    partial class WonkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180721184946_switchTotalPrice")]
+    partial class switchTotalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,8 +61,6 @@ namespace SillyWonko.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsCheckedOut");
 
                     b.Property<decimal>("TotalPrice");
 
