@@ -37,7 +37,9 @@ namespace SillyWonko.Models
             var order = await _context.Orders.Where(o =>
                                              (o.UserID == user.Id) &&
                                              (o.IsCheckedOut != true))
+                                             .OrderBy(o => o.ID)
                                              .FirstOrDefaultAsync();
+                                             
             return order;
         }
         /// <summary>
@@ -146,7 +148,10 @@ namespace SillyWonko.Models
         /// <returns>Recent Order</returns>
         public async Task<Order> GetRecentOrderByUserID(string userID)
         {
-            var order = await _context.Orders.Where(i => i.UserID == userID).FirstOrDefaultAsync();
+            var order = await _context.Orders.Where(i => i.UserID == userID && 
+                                            i.IsCheckedOut != true)
+                                             .OrderBy(o => o.ID)
+                                             .FirstOrDefaultAsync();
             return order;
         }
         /// <summary>
