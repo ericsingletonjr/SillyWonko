@@ -106,6 +106,37 @@ nav #register_link
 	display: block;
 }
 
+.nav_provider {
+	margin-top: .75rem;
+	position: relative;
+}
+
+.nav_provider_one 
+{
+	display: inline-block;
+	margin-right: .5rem;
+}
+
+.nav_provider_one div, p 
+{
+	display: block;
+}
+
+.nav_provider input 
+{
+	background: none;
+	color: transparent;
+	top: 0;
+	margin: 0;
+	position: absolute;
+	height: .75rem;
+}
+
+.nav_provider_one:hover 
+{
+	color: rgb(144, 4, 4);
+}
+
 #menu_tag 
 {
 	position: absolute;
@@ -205,7 +236,7 @@ header #main_logo
 
 #nav_button:hover
 {
-	background: rgb(255, 103, 103);
+	background: rgb(144, 4, 4);
 }
 
 form input:focus 

@@ -8,76 +8,79 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 <head>
-    <title>@ViewBag.Title</title>
-    <meta name="viewport" content="width=device-width" />
-    <link type="text/css" href="~/styles/normalize.css" rel="stylesheet" />
-    <link type="text/css" href="~/styles/main.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,700|Yellowtail" rel="stylesheet">
+	<title>@ViewBag.Title</title>
+	<meta name="viewport" content="width=device-width" />
+	<link type="text/css" href="~/styles/normalize.css" rel="stylesheet" />
+	<link type="text/css" href="~/styles/main.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,700|Yellowtail" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 </head>
 <body>
     <nav onclick="">
-        <section class="nav_identity">
-            @if (TempData["LogOut"] != null)
-            {<p>@TempData["LogOut"]</p>}
+		<section class="nav_identity">
+			@if (TempData["LogOut"] != null)
+			{<p>@TempData["LogOut"]</p>}
 
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <p>@User.Claims.First(c => c.Type == "FullName").Value</p>
-                <p>@User.Identity.Name</p>
-            }
-            <ul>
-                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
-                @if (User.IsInRole(ApplicationRoles.Administrator))
-                {
-                    <li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
-                }
-                <li><a asp-action="Index" asp-controller="Shop">Products</a></li>
+			@if (SignInManager.IsSignedIn(User))
+			{
+				<p>@User.Claims.First(c => c.Type == "FullName").Value</p>
+				<p>@User.Identity.Name</p>
+			}
+			<ul>
+				<li><a asp-action="Index" asp-controller="Home">Home</a></li>
+				@if (User.IsInRole(ApplicationRoles.Administrator))
+				{
+					<li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
+				}
+				<li><a asp-action="Index" asp-controller="Shop">Products</a></li>
 				<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
-            </ul>
+			</ul>
 
-            @if (!SignInManager.IsSignedIn(User))
-            {
+			@if (!SignInManager.IsSignedIn(User))
+			{
 
-                <form method="post" asp-controller="Account" asp-action="Login">
-                    <div class="no_autocomplete">
-                        <input type="password" />
-                    </div>
-                    <input type="text" asp-for="Login.Email" placeholder="email" />
-                    <br />
-                    <input type="password" asp-for="Login.Password" placeholder="password" />
-                    <br />
-                    <input id="nav_button" type="submit" value="login" />
-                    <a id="register_link" asp-controller="Account" asp-action="Register">Not Registered?</a>
-                </form>
+				<form method="post" asp-controller="Account" asp-action="Login">
+					<div class="no_autocomplete">
+						<input type="password" />
+					</div>
+					<input type="text" asp-for="Login.Email" placeholder="email" />
+					<br />
+					<input type="password" asp-for="Login.Password" placeholder="password" />
+					<br />
+					<input id="nav_button" type="submit" value="login" />
+					<a id="register_link" asp-controller="Account" asp-action="Register">Register</a>
+				</form>
 
-                var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-                if (loginProviders.Count > 0)
-                {
-                    <form asp-action="ExternalLogin" asp-controller="Account" method="post">
-                        @foreach (var provider in loginProviders)
-                        {
-                            <input type="submit" name="provider" value="@provider.Name" title="Log in with @provider.DisplayName" />
+				var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-                        }
-                    </form>
-
-                }
-            }
-            else
-            {
-                <div>
+				if (loginProviders.Count > 0)
+				{
+					<form class="nav_provider" asp-action="ExternalLogin" asp-controller="Account" method="post">
+						@foreach (var provider in loginProviders)
+						{
+						<div class="nav_provider_one">
+							<div class="fab fa-@provider.DisplayName.ToLower()"></div>
+							<input id="nav_provider_btn" type="submit" name="provider" value="@provider.Name"/>
+						</div>
+						}
+					</form>
+				}
+			}
+			else
+			{
+				<div>
 					<p id="vc_heading">In Your Cart</p>
 					@await Component.InvokeAsync("CartView", User.Identity.Name)
-                </div>
-                <form asp-controller="Account" asp-action="LogOut">
-                    <input id="nav_button" type="submit" value="logout" />
-                </form>
-            }
-            <div id="menu_indicator">
-                <p id="menu_tag">Menu</p>
-                <div id="menu_triangle"></div>
-            </div>
-        </section>
+				</div>
+				<form asp-controller="Account" asp-action="LogOut">
+					<input id="nav_button" type="submit" value="logout" />
+				</form>
+			}
+			<div id="menu_indicator">
+				<p id="menu_tag">Menu</p>
+				<div id="menu_triangle"></div>
+			</div>
+		</section>
     </nav>
     @RenderBody()
 </body>
