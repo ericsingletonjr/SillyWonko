@@ -42,7 +42,7 @@ namespace SillyWonko.Controllers
                 var cart = await _cart.GetCart(userID);
                 cart.CartItems = await _cart.GetCartItems(cart.ID);
 
-                foreach(CartItem item in cart.CartItems)
+                foreach (CartItem item in cart.CartItems)
                 {
                     item.Product = await _context.GetProductByID(item.ProductID);
                     total = total + (item.Product.Price * item.Quantity);
@@ -57,13 +57,51 @@ namespace SillyWonko.Controllers
             }
             return RedirectToAction("Index", "Shop");
         }
-
+        /// <summary>
+        /// Action that gives the user the ability to finish their checkout
+        /// process
+        /// </summary>
+        /// <param name="uvm">UserViewModel</param>
+        /// <returns>A view</returns>
         [HttpGet]
-        public IActionResult Checkout(UserViewModel uvm)
+        public async Task<IActionResult> Checkout(UserViewModel uvm)
         {
+            if (uvm.Products == null)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                Order currentOrder = await _order.GetRecentOrderByUserID(user.Id);
+                if (currentOrder == null)
+                {
+                    return RedirectToAction("Index", "Shop");
+                }
+                uvm.SoldProducts = await _order.GetSoldProducts(currentOrder.ID);
+                List<CartItem> products = new List<CartItem>();
+                foreach (SoldProduct product in uvm.SoldProducts)
+                {
+                    CartItem cartItem = new CartItem
+                    {
+                        Product = await _context.GetProductByID(product.ProductID),
+                        Quantity = product.Quantity
+                    };
+                    products.Add(cartItem);
+                }
+                Cart placeholder = new Cart
+                {
+                    CartItems = products
+                };
+                uvm.Cart = placeholder;
+                uvm.Total = currentOrder.TotalPrice;
+                uvm.Order = currentOrder;
+
+                return View(uvm);
+            }
             return View(uvm);
         }
-
+        /// <summary>
+        /// This action begins the process of beginning our order creation.
+        /// </summary>
+        /// <param name="uvm">UserViewModel</param>
+        /// <returns>A View</returns>
         [HttpPost]
         public async Task<IActionResult> CheckOut(UserViewModel uvm)
         {
@@ -71,23 +109,40 @@ namespace SillyWonko.Controllers
             Order newOrder = await _order.CreateOrder(user, uvm.Total);
             List<CartItem> cartItems = await _cart.GetCartItems(uvm.Cart.ID);
 
-            foreach(CartItem item in cartItems)
+            foreach (CartItem item in cartItems)
             {
                 await _order.CreateSoldProduct(newOrder, item);
             }
             Cart complete = await _cart.GetCart(user.Id);
 
             complete.IsCheckedOut = true;
-            await _cart.UpdateCart(complete.ID, complete);
-            
+
             newOrder.Products = await _order.GetSoldProducts(newOrder.ID);
             List<Product> products = new List<Product>();
-            foreach(SoldProduct item in newOrder.Products)
+            foreach (SoldProduct item in newOrder.Products)
             {
                 products.Add(await _context.GetProductByID(item.ProductID));
             }
 
-            return View(new UserViewModel { Order = newOrder, Products = products });
+            complete.CartItems = cartItems;
+            uvm = new UserViewModel {
+                Order = newOrder,
+                Products = products,
+                Total = uvm.Total,
+                Cart = complete
+            };
+
+            await _cart.DeleteCart(complete.ID);
+            await _cart.CreateCart(user);
+            return View(uvm);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Complete(UserViewModel uvm)
+        {
+            await _order.OrderComplete(uvm.Order.ID);
+            return RedirectToAction("Index","Shop");
         }
     }
 }

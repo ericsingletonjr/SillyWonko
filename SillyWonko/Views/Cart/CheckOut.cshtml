@@ -6,29 +6,38 @@
     </header>
     <div class="inventory_list">
         <section id="list_wrapper">
-            <p id="detail_name">Your Cart</p>
-
-            @foreach (var product in Model.Products)
+            <p id="detail_name">Order Confirmation</p>
+            <p>Order Number: @Model.Order.ID</p>
+            @foreach (var product in Model.Cart.CartItems)
             {
-                <div id="list_item">
-                    <form asp-action="Detail" asp-controller="Shop" asp-route-id="@product.ID" method="get">
-                        <input id="item_name" value="@product.Name" type="submit" />
-                        <div class="item_info">
-                            <img class="item_image" src="@product.Image" alt="@product.Name" />
-                        </div>
-                    </form>
-                </div>
+                <p>@product.Product.Name QTY:@product.Quantity Price:@product.Product.Price</p>
             }
             <hr />
             <div>
-                <form method="post" asp-controller="Cart" asp-action="Checkout">
-                    <input type="hidden" asp-for="@Model.Cart.ID" />
-                    <input type="hidden" asp-for="@Model.Total" />
-                    <input id="confirm_button" type="submit" value="Checkout" />
-                    <div class="total_wrapper">
-                        <p id="total_price">Total</p>
-                        <p id="total_price">@Model.Total</p>
-                    </div>
+                <form method="post" asp-controller="Cart" asp-action="Complete">
+                    <label>First Name</label>
+                    <input type="text" />
+                    <br />
+                    <label>Last Name</label>
+                    <input type="text" />
+                    <br />
+                    <label>Address 1</label>
+                    <input type="text" />
+                    <br />
+                    <label>Address 2</label>
+                    <input type="text" />
+                    <br />
+                    <label>City</label>
+                    <input type="text" />
+                    <br />
+                    <label>State</label>
+                    <input type="text" />
+                    <br/>
+                    <label>Zip</label>
+                    <input type="text" />
+                    <br />
+                    <input type="hidden" asp-for="@Model.Order.ID" />
+                    <input id="confirm_button" type="submit" value="Complete" />
                 </form>
             </div>
         </section>
