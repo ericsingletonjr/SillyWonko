@@ -48,13 +48,19 @@ namespace SillyWonko
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
-            services.AddAuthentication().AddGoogle(options =>
+            services.AddAuthentication()
+			.AddGoogle(options =>
             {
                 options.ClientId = Configuration["OAUTH:Authentication:Google:ClientId"];
                 options.ClientSecret = Configuration["OAUTH:Authentication:Google:ClientSecret"];
-            });
+            })
+			.AddFacebook(facebookOptions =>
+			{
+				facebookOptions.ClientId = Configuration["OAUTH:Authentication:Facebook:ClientId"];
+				facebookOptions.ClientSecret = Configuration["OAUTH:Authentication:Facebook:ClientSecret"];
+			});
 
-            services.AddAuthorization(options =>
+			services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
                 options.AddPolicy("Employee", policy => policy.Requirements.Add(new EmployeeEmailRequirement("wonko.com")));
