@@ -1,11 +1,17 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
-<form method="post" asp-controller="Account" asp-action="Login">
-    <div asp-validation-summary="All"></div>
 
-    <input type="text" asp-for="Login.Email" placeholder="email" />
-    <br />
-    <input type="password" asp-for="Login.Password" placeholder="password" />
-    <br />
-    <input type="submit" value="login" />
-</form>
+<main class="main_container">
+    <header>
+        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+    </header>
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <div asp-validation-summary="All"></div>
+
+        <input type="text" asp-for="Login.Email" placeholder="email" />
+        <br />
+        <input type="password" asp-for="Login.Password" placeholder="password" />
+        <br />
+        <input type="submit" value="login" />
+    </form>
+</main>

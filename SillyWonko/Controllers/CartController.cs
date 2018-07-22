@@ -141,7 +141,22 @@ namespace SillyWonko.Controllers
             return View(uvm);
 
         }
-
+        /// <summary>
+        /// Action to prevent users from accessing this
+        /// page by itself
+        /// </summary>
+        /// <returns>Redirecto to shop</returns>
+        [HttpGet]
+        public IActionResult Complete()
+        {
+            return RedirectToAction("Index", "Shop");
+        }
+        /// <summary>
+        /// Action that completes the order and gives a brief order
+        /// invoice and then sends an email to the user
+        /// </summary>
+        /// <param name="uvm">UserViewModel</param>
+        /// <returns>View with a UserViewModel</returns>
         [HttpPost]
         public async Task<IActionResult> Complete(UserViewModel uvm)
         {
@@ -160,10 +175,16 @@ namespace SillyWonko.Controllers
 				};
 				productList.Add(cartItem);
 			}
+            Cart placeHolder = new Cart();
 			var orderPrice = order.TotalPrice;
 			var user = await _userManager.GetUserAsync(User);
 			await _emailSender.SendEmailAsync(user.Email, "Your Silly Order", $"<p>{orderPrice}</p>");
-			return RedirectToAction("Index","Shop");
+
+            placeHolder.CartItems = productList;
+            uvm.Cart = placeHolder;
+            uvm.Order = order;
+           
+            return View(uvm);
         }
     }
 }
