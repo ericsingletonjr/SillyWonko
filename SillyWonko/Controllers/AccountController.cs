@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using SillyWonko.Models;
@@ -19,18 +20,22 @@ namespace SillyWonko.Controllers
         private UserManager<ApplicationUser> _userManager { get; set; }
         private SignInManager<ApplicationUser> _signInManager { get; set; }
         private ICartService _cart;
-        /// <summary>
-        /// Setting up our user creation system with identity
-        /// </summary>
-        /// <param name="userManager"></param>
-        /// <param name="signInManager"></param>
-        public AccountController(UserManager<ApplicationUser> userManager,
+		private IEmailSender _emailSender;
+
+		/// <summary>
+		/// Setting up our user creation system with identity
+		/// </summary>
+		/// <param name="userManager"></param>
+		/// <param name="signInManager"></param>
+		public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
-                                 ICartService cart)
+                                 ICartService cart,
+								 IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _cart = cart;
+			_cart = cart;
+			_emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -115,6 +120,7 @@ namespace SillyWonko.Controllers
                     await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
 
                     await _signInManager.SignInAsync(user, false);
+					await _emailSender.SendEmailAsync(user.Email, "Welcome To SillyWonko!", "<p>Hello.</p>");	
 
                     return RedirectToAction("Index", "Shop");
                 }
@@ -279,7 +285,8 @@ namespace SillyWonko.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index", "Shop");
+						await _emailSender.SendEmailAsync(user.Email, "Welcome To SillyWonko!", "<p>Hello.</p>");
+						return RedirectToAction("Index", "Shop");
                     }
                 }
             }

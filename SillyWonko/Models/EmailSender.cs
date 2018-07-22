@@ -20,7 +20,7 @@ namespace SillyWonko.Models
 
 		public async Task SendEmailAsync(string email, string subject, string htmlMessage)
 		{
-			var client = new SendGridClient(Configuration["Api_Key"]);
+			var client = new SendGridClient(Configuration["APIKeys:Api_Key"]);
 			var msg = new SendGridMessage();
 
 			msg.SetFrom("admin@wonko.com", "Silly Wonko");

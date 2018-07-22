@@ -71,7 +71,7 @@ namespace SillyWonko
                 options.AddPolicy("Bronze", policy => policy.Requirements.Add(new CricketRequirement("Bronze Cricket Member")));
             });
 
-            // services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddSingleton<IAuthorizationHandler, EmployeeEmailHandler>();
             services.AddSingleton<IAuthorizationHandler, CricketHandler>();
 
