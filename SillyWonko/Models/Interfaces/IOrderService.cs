@@ -17,6 +17,7 @@ namespace SillyWonko.Models.Interfaces
         Task<List<Order>> GetOrders();
         Task<List<Order>> GetOrdersByUserID(string userID);
         Task<Order> GetRecentOrderByUserID(string userID);
+        Task<Order> GetOrderByID(int id);
         Task<List<SoldProduct>> GetSoldProducts(int id);
 
         Task<Order> UpdateOrder(int id, Order order);

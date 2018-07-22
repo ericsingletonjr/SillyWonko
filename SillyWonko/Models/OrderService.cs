@@ -141,6 +141,17 @@ namespace SillyWonko.Models
             return orders;
         }
         /// <summary>
+        /// Action allows us to get an order specifically
+        /// by its id
+        /// </summary>
+        /// <param name="id">ID of order</param>
+        /// <returns>Order</returns>
+        public async Task<Order> GetOrderByID(int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            return order;
+        }
+        /// <summary>
         /// Action that lets us get the most recent order
         /// made by the user
         /// </summary>

@@ -10,8 +10,8 @@ using SillyWonko.Data;
 namespace SillyWonko.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180719185749_userDBrefresh71918")]
-    partial class userDBrefresh71918
+    [Migration("20180722003329_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
