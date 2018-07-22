@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using SillyWonko.Models;
 using SillyWonko.Models.Interfaces;
@@ -17,16 +18,19 @@ namespace SillyWonko.Controllers
         private IOrderService _order;
         private UserManager<ApplicationUser> _userManager { get; set; }
         private SignInManager<ApplicationUser> _signInManager { get; set; }
+		private IEmailSender _emailSender;
 
         public CartController(IWarehouse context, ICartService cart, IOrderService order,
                               UserManager<ApplicationUser> userManager,
-                              SignInManager<ApplicationUser> signInManager)
+                              SignInManager<ApplicationUser> signInManager,
+							  IEmailSender emailSender)
         {
             _context = context;
             _cart = cart;
             _order = order;
             _userManager = userManager;
             _signInManager = signInManager;
+			_emailSender = emailSender;
         }
         /// <summary>
         /// Action that gives the user a view of their cart. It gives them the total price
@@ -142,7 +146,24 @@ namespace SillyWonko.Controllers
         public async Task<IActionResult> Complete(UserViewModel uvm)
         {
             await _order.OrderComplete(uvm.Order.ID);
-            return RedirectToAction("Index","Shop");
+
+			var order = await _order.GetOrderByID(uvm.Order.ID);
+			order.Products = await _order.GetSoldProducts(uvm.Order.ID);
+			List<CartItem> productList = new List<CartItem>();
+
+			foreach (SoldProduct product in order.Products)
+			{
+				CartItem cartItem = new CartItem
+				{
+					Product = await _context.GetProductByID(product.ProductID),
+					Quantity = product.Quantity
+				};
+				productList.Add(cartItem);
+			}
+			var orderPrice = order.TotalPrice;
+			var user = await _userManager.GetUserAsync(User);
+			await _emailSender.SendEmailAsync(user.Email, "Your Silly Order", $"<p>{orderPrice}</p>");
+			return RedirectToAction("Index","Shop");
         }
     }
 }
