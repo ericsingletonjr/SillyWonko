@@ -64,6 +64,7 @@ namespace SillyWonko
 			services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
+                options.AddPolicy("Member", policy => policy.RequireRole(ApplicationRoles.Member));
                 options.AddPolicy("Employee", policy => policy.Requirements.Add(new EmployeeEmailRequirement("wonko.com")));
 
                 options.AddPolicy("Golden", policy => policy.Requirements.Add(new CricketRequirement("Golden Cricket Member")));

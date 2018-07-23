@@ -119,6 +119,16 @@ namespace SillyWonko.Models
             return cartItems;
 		}
         /// <summary>
+        /// Action to get a specific CartItem
+        /// </summary>
+        /// <param name="id">Id of cartItem</param>
+        /// <returns>cart item</returns>
+        public async Task<CartItem> GetCartItem(int id)
+        {
+            var cartItem = await _context.CartItems.FindAsync(id);
+            return cartItem;
+        }
+        /// <summary>
         /// Action to update a specific cart for admin purposes
         /// </summary>
         /// <param name="id">Id of specific cart</param>

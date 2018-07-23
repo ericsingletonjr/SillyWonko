@@ -25,7 +25,7 @@
                 <form asp-action="AddToCart" asp-controller="Shop" method="post">
                     <input type="hidden" asp-for="Product.ID" />
                     <label asp-for="CartItem.Quantity">Amount of want</label>
-                    <input type="number" asp-for="CartItem.Quantity" />
+                    <input type="number" asp-for="CartItem.Quantity" min="1" max="7" value="1" />
                     <input id="detail_button" value="I Want It" type="submit" />
                 </form>
             </div>
