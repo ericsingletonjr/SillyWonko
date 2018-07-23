@@ -1,0 +1,22 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+
+<main class="main_container">
+    <header>
+        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+    </header>
+    <div class="inventory_list">
+        <section id="list_wrapper">
+            <p id="detail_name">Invoice</p>
+            <p>Order Number: @Model.Order.ID</p>
+            @foreach (var product in Model.Cart.CartItems)
+            {
+                <p>@product.Product.Name QTY:@product.Quantity Price:@product.Product.Price</p>
+            }
+            <hr />
+            <form method="get" asp-action="Index" asp-controller="Shop">
+                <p>Total: @Model.Order.TotalPrice</p>
+                <input id="confirm_button" type="submit" value="Back to shopping" />
+            </form>
+        </section>
+    </div>
+</main>

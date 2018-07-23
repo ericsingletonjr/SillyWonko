@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SillyWonko.Data;
 
 namespace SillyWonko.Migrations
 {
     [DbContext(typeof(WonkoDbContext))]
-    partial class WonkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180718172759_add-productid")]
+    partial class addproductid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,23 +56,6 @@ namespace SillyWonko.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("SillyWonko.Models.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsCheckedOut");
-
-                    b.Property<decimal>("TotalPrice");
-
-                    b.Property<string>("UserID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("SillyWonko.Models.Product", b =>
                 {
                     b.Property<int>("ID")
@@ -107,25 +92,6 @@ namespace SillyWonko.Migrations
                     );
                 });
 
-            modelBuilder.Entity("SillyWonko.Models.SoldProduct", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderID");
-
-                    b.Property<int>("ProductID");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("OrderID");
-
-                    b.ToTable("SoldProducts");
-                });
-
             modelBuilder.Entity("SillyWonko.Models.CartItem", b =>
                 {
                     b.HasOne("SillyWonko.Models.Cart")
@@ -136,14 +102,6 @@ namespace SillyWonko.Migrations
                     b.HasOne("SillyWonko.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SillyWonko.Models.SoldProduct", b =>
-                {
-                    b.HasOne("SillyWonko.Models.Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

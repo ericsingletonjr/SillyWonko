@@ -17,14 +17,18 @@
 			<div class="product_cell">
 				<img class="product_image" src="~/@Model.Product.Image" />
 			</div>
-			<div id="detail_card">
-				<p id="detail_name">@Model.Product.Name</p>
-				<p id="detail_description">@Model.Product.Description</p>
-				<p id="detail_price">$@Model.Product.Price</p>
-			<form asp-action="Index" asp-controller="Shop" method="get">
-				<input id="detail_button" value="I Want It" type="submit" />
-			</form>
-			</div>
+            <div id="detail_card">
+                <p id="detail_name">@Model.Product.Name</p>
+                <p id="detail_description">@Model.Product.Description</p>
+                <p id="detail_price">$@Model.Product.Price</p>
+
+                <form asp-action="AddToCart" asp-controller="Shop" method="post">
+                    <input type="hidden" asp-for="Product.ID" />
+                    <label asp-for="CartItem.Quantity">Amount of want</label>
+                    <input type="number" asp-for="CartItem.Quantity" />
+                    <input id="detail_button" value="I Want It" type="submit" />
+                </form>
+            </div>
 		</section>
 	</div>
 </main>

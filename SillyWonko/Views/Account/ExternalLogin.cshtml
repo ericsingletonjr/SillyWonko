@@ -1,0 +1,17 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+
+<main class="main_container">
+    <header>
+        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+    </header>
+    <h2>External</h2>
+    <form asp-action="ExternalLoginConfirmation" method="post">
+        <label asp-for="@Model.User.FirstName"></label>
+        <input asp-for="@Model.User.FirstName" />
+        <label asp-for="@Model.User.LastName"></label>
+        <input asp-for="@Model.User.LastName" />
+        <label asp-for="@Model.External.Email"></label>
+        <input asp-for="@Model.External.Email" />
+        <input type="submit" value="Register" />
+    </form>
+</main>

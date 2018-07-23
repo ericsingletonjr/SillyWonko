@@ -35,6 +35,8 @@ namespace SillyWonko
         {
             services.AddMvc();
             services.AddScoped<IWarehouse, DevWarehouse>();
+			services.AddScoped<ICartService, CartService>();
+			services.AddScoped<IOrderService, OrderService>();
 
 			services.AddDbContext<WonkoDbContext>(options => 
                      options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
@@ -47,7 +49,19 @@ namespace SillyWonko
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
-            services.AddAuthorization(options =>
+            services.AddAuthentication()
+			.AddGoogle(options =>
+            {
+                options.ClientId = Configuration["OAUTH:Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["OAUTH:Authentication:Google:ClientSecret"];
+            })
+			.AddFacebook(facebookOptions =>
+			{
+				facebookOptions.ClientId = Configuration["OAUTH:Authentication:Facebook:ClientId"];
+				facebookOptions.ClientSecret = Configuration["OAUTH:Authentication:Facebook:ClientSecret"];
+			});
+
+			services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Administrator));
                 options.AddPolicy("Employee", policy => policy.Requirements.Add(new EmployeeEmailRequirement("wonko.com")));
@@ -57,7 +71,7 @@ namespace SillyWonko
                 options.AddPolicy("Bronze", policy => policy.Requirements.Add(new CricketRequirement("Bronze Cricket Member")));
             });
 
-            // services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddSingleton<IAuthorizationHandler, EmployeeEmailHandler>();
             services.AddSingleton<IAuthorizationHandler, CricketHandler>();
 

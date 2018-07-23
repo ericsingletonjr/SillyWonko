@@ -1,20 +1,29 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
-<section>
-    <form method="get" asp-controller="Admin" asp-action="Create">
-        <input type="submit" value="Add New Product" />
-    </form>
-    <form asp-controller="Shop" asp-action="Index">
-        <input type="submit" value="Shop" />
-    </form>
-</section>
-<section>
-    Admin controls for Users?
-</section>
-<section>
-    <p>List of products</p>
-    @foreach(var product in Model.Products)
-    {
-        <a asp-controller="Admin" asp-action="Details" asp-route-id="@product.ID">@product.Name</a>
-    }
-</section>
+<main class="main_container">
+	<header>
+		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+	</header>
+	<div class="inventory_list">
+		<section id="list_wrapper">
+			<p id="detail_name">Store Inventory</p>
+			<p id="detail_description">Silly Wonko, LLC.</p>
+			<p id="detail_price">Admin Panel</p>
+
+			@foreach (var product in Model.Products)
+			{
+				<div id="list_item">
+					<form asp-action="Details" asp-controller="Admin" asp-route-id="@product.ID" method="get">
+						<input id="item_button" value="@product.Name" type="submit" />
+					<img class="item_image" src="@product.Image" alt="@product.Name" />
+					</form>
+				</div>
+			}
+
+			<form method="get" asp-controller="Admin" asp-action="Create">
+				<input type="submit" value="Add New Product" />
+			</form>
+
+		</section>
+	</div>
+</main>
