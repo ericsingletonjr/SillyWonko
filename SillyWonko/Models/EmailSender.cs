@@ -23,7 +23,7 @@ namespace SillyWonko.Models
 			var client = new SendGridClient(Configuration["APIKeys:Api_Key"]);
 			var msg = new SendGridMessage();
 
-			msg.SetFrom("admin@wonko.com", "Silly Wonko");
+			msg.SetFrom("admin@sillywonko.com", "Silly Wonko");
 			msg.AddTo(email);
 			msg.SetSubject(subject);
 			msg.AddContent(MimeType.Html, htmlMessage);
