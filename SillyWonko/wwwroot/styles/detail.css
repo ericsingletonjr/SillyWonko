@@ -79,12 +79,20 @@ nav a:hover
 	color: rgb(144, 4, 4);
 }
 
-nav input
+nav input[type=text], input[type=password] 
 {
-	border: none;
+	width: 80%;
+	border-radius: .25rem;
+	font-weight: 300;
 	margin-top: 1rem;
-	padding: .75rem;
-	z-index: 1;
+	border: none;
+	padding: .75rem 1rem;
+	box-shadow: inset 0 0 .15rem rgba(0, 0, 0, .25);
+}
+
+nav input 
+{
+	margin-top: 1rem;
 }
 
 .nav_identity p:first-of-type
@@ -303,6 +311,15 @@ form .no_autocomplete
 	color: rgb(0, 0, 0);
 }
 
+input[type=number]
+{
+	font-weight: 300;
+	padding: 1rem;
+	margin-top: 1rem;
+	border: none;
+	width: 100%;
+}
+
 #detail_button
 {
 	border: none;
@@ -312,7 +329,7 @@ form .no_autocomplete
 	padding: 1rem;
 	background: rgb(0, 0, 0);
 	width: 100%;
-	margin-top: 2rem;
+	margin-top: 1rem;
 }
 
 #detail_button:hover
