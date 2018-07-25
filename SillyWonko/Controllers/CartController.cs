@@ -194,6 +194,7 @@ namespace SillyWonko.Controllers
         [Authorize(Policy = "Member")]
         public async Task<IActionResult> Complete(UserViewModel uvm)
         {
+            Transaction.Run();
             await _order.OrderComplete(uvm.Order.ID);
 
             var order = await _order.GetOrderByID(uvm.Order.ID);
