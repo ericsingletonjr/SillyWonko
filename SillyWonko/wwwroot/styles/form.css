@@ -81,8 +81,7 @@ nav a:hover
 
 nav input[type=text], nav input[type=password]
 {
-	width: 80%;
-	border-radius: .25rem;
+	width: 100%;
 	font-weight: 300;
 	margin-top: 1rem;
 	border: none;
@@ -133,6 +132,7 @@ nav #register_link
 
 .nav_provider input 
 {
+	border: none;
 	cursor: pointer;
 	background: none;
 	color: transparent;
@@ -276,7 +276,6 @@ header #main_logo
 .form_container input[type=text], .form_container input[type=password] 
 {
 	width: 80%;
-	border-radius: .25rem;
 	font-weight: 300;
 	border: none;
 	padding: .75rem 1rem;

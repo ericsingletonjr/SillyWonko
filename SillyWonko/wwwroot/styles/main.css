@@ -19,15 +19,18 @@ body
 	font-size: 1.2rem;
 }
 
-h1 {
+h1 
+{
 	font-size: 3rem;
 }
 
-p {
+p 
+{
 	font-size: 1.2rem;
 }
 
-.main_container {
+.main_container 
+{
 	margin: 0 auto;
 	max-width: 80rem;
 }
@@ -77,8 +80,7 @@ nav a:hover
 
 nav input[type=text], input[type=password] 
 {
-	width: 80%;
-	border-radius: .25rem;
+	width: 100%;
 	font-weight: 300;
 	margin-top: 1rem;
 	border: none;
@@ -129,6 +131,7 @@ nav #register_link
 
 .nav_provider input
 {
+	border: none;
 	background: none;
 	color: transparent;
 	top: 0;
