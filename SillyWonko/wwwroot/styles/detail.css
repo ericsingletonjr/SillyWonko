@@ -81,8 +81,7 @@ nav a:hover
 
 nav input[type=text], input[type=password] 
 {
-	width: 80%;
-	border-radius: .25rem;
+	width: 100%;
 	font-weight: 300;
 	margin-top: 1rem;
 	border: none;
@@ -132,6 +131,7 @@ nav #register_link
 
 .nav_provider input 
 {
+	border: none;
 	background: none;
 	color: transparent;
 	top: 0;
@@ -257,6 +257,18 @@ form .no_autocomplete
 	display: none;
 }
 
+:-webkit-input-placeholder 
+{
+	color: rgb(175, 175, 175);
+	text-transform: lowercase;
+}
+
+:-ms-input-placeholder 
+{
+	color: rgb(175, 175, 175);
+	text-transform: lowercase;
+}
+
 .product_detail
 {
 	display: block;
@@ -311,13 +323,15 @@ form .no_autocomplete
 	color: rgb(0, 0, 0);
 }
 
-input[type=number]
+input[type=number] 
 {
+	text-transform: lowercase;
+	width: 100%;
 	font-weight: 300;
-	padding: 1rem;
 	margin-top: 1rem;
 	border: none;
-	width: 100%;
+	padding: .75rem 1rem;
+	box-shadow: inset 0 0 .15rem rgba(0, 0, 0, .25);
 }
 
 #detail_button
