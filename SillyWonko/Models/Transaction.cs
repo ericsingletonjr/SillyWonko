@@ -6,7 +6,7 @@ using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
 using AuthorizeNet.Api.Controllers.Bases;
 using Microsoft.Extensions.Configuration;
-
+using SillyWonko.Models.ViewModels;
 
 namespace SillyWonko.Models
 {
@@ -19,15 +19,15 @@ namespace SillyWonko.Models
             Configuration = configuration;
         }
 
-        public static string Run()
+        public string Run(UserViewModel uvm)
         {
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = "5vjF78Lws4",
+                name = Configuration["AuthNet:Name"],
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = "5L7qFH89qzwAm84m"
+                Item = Configuration["AuthNet:TransactionKey"]
             };
 
             var CreditCard = new creditCardType
@@ -38,40 +38,15 @@ namespace SillyWonko.Models
 
             var PaymentType = new paymentType { Item = CreditCard };
 
-            customerAddressType Address = new customerAddressType()
-            {
-                firstName = "Bob",
-                lastName = "Dole",
-                address = "123 not real lane",
-                city = "FakeCity",
-                zip = "98004"
-            };
-
-            var LineItems = new lineItemType[2]
-            {
-               new lineItemType
-               {
-                   itemId = "1",
-                   name = "testProd1",
-                   quantity = 2,
-                   unitPrice = new Decimal(1.00)
-               },
-               new lineItemType
-               {
-                   itemId = "2",
-                   name = "testProd2",
-                   quantity = 3,
-                   unitPrice = new Decimal(3.00)
-               }
-            };
+            customerAddressType Address = GetAddress(uvm);
 
             var TransactionRequest = new transactionRequestType
             {
                 transactionType = transactionTypeEnum.authCaptureTransaction.ToString(),
-                amount = 11.00m,
+                amount = uvm.Order.TotalPrice,
                 payment = PaymentType,
                 billTo = Address,
-                lineItems = LineItems
+                lineItems = CreateLineItems(uvm),
             };
 
             var request = new createTransactionRequest { transactionRequest = TransactionRequest };
@@ -86,7 +61,7 @@ namespace SillyWonko.Models
                 {
                     if (response.transactionResponse.messages != null)
                     {
-                        Console.WriteLine("Successfully created transaction with Transaction ID: " +
+                        Console.WriteLine("Created transaction. Transaction ID: " +
                             response.transactionResponse.transId);
                         Console.WriteLine("Response Code: " +
                             response.transactionResponse.responseCode);
@@ -127,9 +102,50 @@ namespace SillyWonko.Models
             {
                 Console.WriteLine("Null Response.");
             }
-
             return "invalid";
-
+        }
+        /// <summary>
+        /// Method that allows us to create a customerAddressType
+        /// dynamically for transactions
+        /// </summary>
+        /// <param name="uvm">UserViewModel</param>
+        /// <returns>CustomerAddressType</returns>
+        public customerAddressType GetAddress(UserViewModel uvm)
+        {
+            customerAddressType Address = new customerAddressType()
+            {
+                firstName = uvm.User.FirstName,
+                lastName = uvm.User.LastName,
+                address = $"{uvm.Shipping.Address1} {uvm.Shipping.Address2}",
+                city = uvm.Shipping.City,
+                state = uvm.Shipping.State,
+                zip = "98004"
+            };
+            return Address;
+        }
+        /// <summary>
+        /// Method that takes in a UserViewModel to access the
+        /// appropriate product information from the cartitems.
+        /// This allows for us to dynamically create a sales transaction
+        /// </summary>
+        /// <param name="uvm">UserViewModel</param>
+        /// <returns>LineItemType array</returns>
+        public lineItemType[] CreateLineItems(UserViewModel uvm)
+        {
+            var lineItems = new lineItemType[uvm.Cart.CartItems.Count];
+            int index = 0;
+            foreach(CartItem item in uvm.Cart.CartItems)
+            {
+                lineItems[index] = new lineItemType
+                {
+                    itemId = $"{item.Product.ID}",
+                    name = item.Product.Name,
+                    quantity = item.Quantity,
+                    unitPrice = item.Product.Price
+                };
+                index++;
+            }
+            return lineItems;
         }
     }
 }
