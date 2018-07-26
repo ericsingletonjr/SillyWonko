@@ -16,27 +16,27 @@
             <div>
                 <form method="post" asp-controller="Cart" asp-action="Complete">
                     <p>Total: @Model.Order.TotalPrice</p>
-                    <label>First Name</label>
-                    <input type="text" />
+                    <label asp-for="@Model.User.FirstName">First Name</label>
+                    <input type="text" asp-for="@Model.User.FirstName" />
                     <br />
-                    <label>Last Name</label>
-                    <input type="text" />
+                    <label asp-for="@Model.User.LastName">Last Name</label>
+                    <input type="text" asp-for="@Model.User.LastName" />
                     <br />
-                    <label>Address 1</label>
-                    <input type="text" />
+                    <label asp-for="@Model.Shipping.Address1">Address 1</label>
+                    <input type="text" asp-for="@Model.Shipping.Address1" />
                     <br />
-                    <label>Address 2</label>
-                    <input type="text" />
+                    <label asp-for="@Model.Shipping.Address2">Address 2</label>
+                    <input type="text" asp-for="@Model.Shipping.Address2" />
                     <br />
-                    <label>City</label>
-                    <input type="text" />
+                    <label asp-for="@Model.Shipping.City">City</label>
+                    <input type="text" asp-for="@Model.Shipping.City"/>
                     <br />
-                    <label>State</label>
-                    <input type="text" />
+                    <label asp-for="@Model.Shipping.State">State</label>
+                    <input type="text" asp-for="@Model.Shipping.State"/>
                     <br />
-                    <label>Zip</label>
+                    @*<label>Zip</label>
                     <input type="text" />
-                    <br />
+                    <br />*@
                     <input type="hidden" asp-for="@Model.Order.ID" />
                     <input id="confirm_button" type="submit" value="Complete" />
                 </form>

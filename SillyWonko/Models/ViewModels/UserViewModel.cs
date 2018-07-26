@@ -12,6 +12,7 @@ namespace SillyWonko.Models.ViewModels
         public LoginViewModel Login { get; set; }
         public ExternalLoginViewModel External { get; set; }
         public RegisterViewModel Register { get; set; }
+        public ShippingViewModel Shipping { get; set; }
 
         public Order Order { get; set; }
         public Product Product { get; set; }

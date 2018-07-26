@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SillyWonko.Models;
 using SillyWonko.Models.Interfaces;
 using SillyWonko.Models.ViewModels;
@@ -18,6 +19,7 @@ namespace SillyWonko.Controllers
         private IWarehouse _context;
         private ICartService _cart;
         private IOrderService _order;
+        private IConfiguration Configuration;
         private UserManager<ApplicationUser> _userManager { get; set; }
         private SignInManager<ApplicationUser> _signInManager { get; set; }
         private IEmailSender _emailSender;
@@ -25,7 +27,7 @@ namespace SillyWonko.Controllers
         public CartController(IWarehouse context, ICartService cart, IOrderService order,
                               UserManager<ApplicationUser> userManager,
                               SignInManager<ApplicationUser> signInManager,
-                              IEmailSender emailSender)
+                              IEmailSender emailSender, IConfiguration configuration)
         {
             _context = context;
             _cart = cart;
@@ -33,6 +35,7 @@ namespace SillyWonko.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            Configuration = configuration;
         }
         /// <summary>
         /// Action that gives the user a view of their cart. It gives them the total price
@@ -142,6 +145,51 @@ namespace SillyWonko.Controllers
         public async Task<IActionResult> CheckOut(UserViewModel uvm)
         {
             var user = await _userManager.GetUserAsync(User);
+            var existingOrder = await _order.GetRecentOrderByUserID(user.Id);
+
+            if (existingOrder != null)
+            {
+                decimal total = 0;
+
+                uvm.Cart.CartItems = await _cart.GetCartItems(uvm.Cart.ID);
+                foreach (CartItem item in uvm.Cart.CartItems)
+                {
+                    Product product = await _context.GetProductByID(item.ProductID);
+                    await _order.CreateSoldProduct(existingOrder, item);
+                    await _cart.DeleteCartItem(item.ID);
+                }
+
+                existingOrder.Products = await _order.GetSoldProducts(existingOrder.ID);
+
+                List<Product> addProducts = new List<Product>();
+                List<CartItem> placeItems = new List<CartItem>();
+                foreach (SoldProduct item in existingOrder.Products)
+                {
+                    Product product = await _context.GetProductByID(item.ProductID);
+                    total += (product.Price * item.Quantity);
+                    addProducts.Add(product);
+                    CartItem cartItem = new CartItem
+                    {
+                        Product = await _context.GetProductByID(item.ProductID),
+                        Quantity = item.Quantity
+                    };
+                    placeItems.Add(cartItem);
+                }
+                existingOrder.TotalPrice = total;
+                await _order.UpdateOrder(existingOrder.ID, existingOrder);
+
+                uvm.Cart.CartItems = placeItems;
+
+                uvm = new UserViewModel
+                {
+                    Order = existingOrder,
+                    Products = addProducts,
+                    Total = existingOrder.TotalPrice,
+                    Cart = uvm.Cart
+                };
+                return View(uvm);
+            }
+
             Order newOrder = await _order.CreateOrder(user, uvm.Total);
             List<CartItem> cartItems = await _cart.GetCartItems(uvm.Cart.ID);
 
@@ -194,8 +242,6 @@ namespace SillyWonko.Controllers
         [Authorize(Policy = "Member")]
         public async Task<IActionResult> Complete(UserViewModel uvm)
         {
-            await _order.OrderComplete(uvm.Order.ID);
-
             var order = await _order.GetOrderByID(uvm.Order.ID);
             order.Products = await _order.GetSoldProducts(uvm.Order.ID);
             List<CartItem> productList = new List<CartItem>();
@@ -211,6 +257,15 @@ namespace SillyWonko.Controllers
             }
             Cart placeHolder = new Cart();
             var orderPrice = order.TotalPrice;
+
+            placeHolder.CartItems = productList;
+            uvm.Cart = placeHolder;
+            uvm.Order = order;
+
+            Transaction transaction = new Transaction(Configuration);
+            transaction.Run(uvm);
+
+            await _order.OrderComplete(uvm.Order.ID);
             var user = await _userManager.GetUserAsync(User);
 
             StringBuilder sb = new StringBuilder();
@@ -226,10 +281,6 @@ namespace SillyWonko.Controllers
             sb.AppendLine($"<h3>Curious Total: {orderPrice}</h3>");
 
             await _emailSender.SendEmailAsync(user.Email, "Silly Invoice", sb.ToString());
-
-            placeHolder.CartItems = productList;
-            uvm.Cart = placeHolder;
-            uvm.Order = order;
 
             return View(uvm);
         }
