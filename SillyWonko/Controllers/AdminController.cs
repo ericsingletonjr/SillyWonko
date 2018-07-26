@@ -14,10 +14,12 @@ namespace SillyWonko.Controllers
     public class AdminController : Controller
     {
         private IWarehouse _context;
+		private IOrderService _orders;
 
-        public AdminController(IWarehouse context)
+		public AdminController(IWarehouse context, IOrderService orders)
         {
             _context = context;
+			_orders = orders;
         }
 
         [Authorize(Policy = "AdminOnly")]
@@ -26,8 +28,9 @@ namespace SillyWonko.Controllers
             UserViewModel uvm = new UserViewModel();
             var productList = await  _context.GetProducts();
             uvm.Products = productList;
-            
-            return View(uvm);
+			var orderList = await _orders.GetRecentOrders();
+			uvm.Orders = orderList;
+			return View(uvm);
         }
 
         [HttpGet]
