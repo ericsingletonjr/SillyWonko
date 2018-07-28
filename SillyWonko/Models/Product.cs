@@ -16,6 +16,7 @@ namespace SillyWonko.Models
         [Required]
 		public decimal Price { get; set; }
 		public string Description { get; set; }
+        [Required]
 		public string Image { get; set; }
 	}
 }
