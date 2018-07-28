@@ -1,5 +1,9 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
+@{ 
+    int index = 0;
+}
+
 <main class="main_container">
 	<header>
 		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
@@ -29,7 +33,9 @@
 					{
 						<p>Order Number: @order.ID</p>
 						<p>Total: @order.TotalPrice</p>
-					}
+                        <p>User: @Model.Users[index].FirstName @Model.Users[index].LastName</p>
+                        index++;
+                    }
 				</section>
 			</section>
 		</section>

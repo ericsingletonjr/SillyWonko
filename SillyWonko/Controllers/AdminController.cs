@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -43,7 +44,12 @@ namespace SillyWonko.Controllers
 			{
 				ApplicationUser user = new ApplicationUser();
 				user.Id = order.UserID;
-				user.UserName = await _userManager.GetUserNameAsync(user);
+                var claims = await _userManager.GetClaimsAsync(user);
+                string[] fullName = claims.First(c => c.Type == "FullName")
+                                        .Value
+                                        .Split(" ");
+                user.FirstName = fullName[0];
+                user.LastName = fullName[1];
 				uvm.Users.Add(user);
 			}
 			return View(uvm);

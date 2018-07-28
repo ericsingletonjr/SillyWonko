@@ -163,6 +163,7 @@ namespace SillyWonko.Controllers
 
                 List<Product> addProducts = new List<Product>();
                 List<CartItem> placeItems = new List<CartItem>();
+                int updateTotal = 0;
 
                 foreach (SoldProduct item in existingOrder.Products)
                 {
@@ -175,11 +176,12 @@ namespace SillyWonko.Controllers
                         Quantity = item.Quantity
                     };
                     placeItems.Add(cartItem);
-                    existingOrder.TotalItems += item.Quantity;
+                    updateTotal += item.Quantity;
                 }
                 existingOrder.TotalPrice = total;
-                await _order.UpdateOrder(existingOrder.ID, existingOrder);
+                existingOrder.TotalItems = updateTotal;
 
+                await _order.UpdateOrder(existingOrder.ID, existingOrder);
                 uvm.Cart.CartItems = placeItems;
 
                 uvm = new UserViewModel
