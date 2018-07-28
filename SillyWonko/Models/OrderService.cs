@@ -129,13 +129,28 @@ namespace SillyWonko.Models
             var orders = await _context.Orders.ToListAsync();
             return orders;
         }
-        /// <summary>
-        /// Action that lets us get all the associated orders
-        /// based on a specific userIds
-        /// </summary>
-        /// <param name="userID">UserID</param>
-        /// <returns>List of Orders associated with the specific user</returns>
-        public async Task<List<Order>> GetOrdersByUserID(string userID)
+		/// <summary>
+		/// Action that allows us to view most recent orders from the
+		/// database. Admin purposes
+		/// </summary>
+		/// <returns>List of Orders</returns>
+		public async Task<List<Order>> GetRecentOrders()
+		{
+			var orders = await _context.Orders.OrderByDescending(o => o.ID).Take(20).ToListAsync();
+		
+			foreach (var order in orders)
+			{
+				order.Products = await _context.SoldProducts.Where(p => p.OrderID == order.ID).ToListAsync();
+			}
+			return orders;
+		}
+		/// <summary>
+		/// Action that lets us get all the associated orders
+		/// based on a specific userIds
+		/// </summary>
+		/// <param name="userID">UserID</param>
+		/// <returns>List of Orders associated with the specific user</returns>
+		public async Task<List<Order>> GetOrdersByUserID(string userID)
         {
             var orders = await _context.Orders.Where(i => i.UserID == userID).ToListAsync();
             return orders;

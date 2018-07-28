@@ -4,26 +4,34 @@
 	<header>
 		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
 	</header>
-	<div class="inventory_list">
+	<div class="admin_wrapper">
 		<section id="list_wrapper">
 			<p id="detail_name">Store Inventory</p>
 			<p id="detail_description">Silly Wonko, LLC.</p>
 			<p id="detail_price">Admin Panel</p>
 
-			@foreach (var product in Model.Products)
-			{
-				<div id="list_item">
-					<form asp-action="Details" asp-controller="Admin" asp-route-id="@product.ID" method="get">
-						<input id="item_button" value="@product.Name" type="submit" />
-					<img class="item_image" src="@product.Image" alt="@product.Name" />
-					</form>
-				</div>
-			}
+			<section class="inventory_list">
+				@foreach (var product in Model.Products)
+				{
+					<div id="list_item">
+						<form asp-action="Details" asp-controller="Admin" asp-route-id="@product.ID" method="get">
+							<input id="item_button" value="@product.Name" type="submit" />
+							<img class="item_image" src="@product.Image" alt="@product.Name" />
+						</form>
+					</div>
+				}
 
-			<form method="get" asp-controller="Admin" asp-action="Create">
-				<input type="submit" value="Add New Product" />
-			</form>
-
+				<form method="get" asp-controller="Admin" asp-action="Create">
+					<input type="submit" value="Add New Product" />
+				</form>
+				<section class="order_list">
+					@foreach (var order in Model.Orders)
+					{
+						<p>Order Number: @order.ID</p>
+						<p>Total: @order.TotalPrice</p>
+					}
+				</section>
+			</section>
 		</section>
 	</div>
 </main>
