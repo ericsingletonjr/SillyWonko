@@ -13,31 +13,16 @@
                 <p>@product.Product.Name QTY:@product.Quantity Price:@product.Product.Price</p>
             }
             <hr />
-            <div>
+            <div class="form_container">
                 <form method="post" asp-controller="Cart" asp-action="Complete">
-                    <p>Total: @Model.Order.TotalPrice</p>
-                    <label asp-for="@Model.User.FirstName">First Name</label>
-                    <input type="text" asp-for="@Model.User.FirstName" />
-                    <br />
-                    <label asp-for="@Model.User.LastName">Last Name</label>
-                    <input type="text" asp-for="@Model.User.LastName" />
-                    <br />
-                    <label asp-for="@Model.Shipping.Address1">Address 1</label>
-                    <input type="text" asp-for="@Model.Shipping.Address1" />
-                    <br />
-                    <label asp-for="@Model.Shipping.Address2">Address 2</label>
-                    <input type="text" asp-for="@Model.Shipping.Address2" />
-                    <br />
-                    <label asp-for="@Model.Shipping.City">City</label>
-                    <input type="text" asp-for="@Model.Shipping.City"/>
-                    <br />
-                    <label asp-for="@Model.Shipping.State">State</label>
-                    <input type="text" asp-for="@Model.Shipping.State"/>
-                    <br />
-                    @*<label>Zip</label>
-                    <input type="text" />
-                    <br />*@
+                    <p><input type="text" asp-for="@Model.User.FirstName" placeholder="First Name" /></p>
+                    <p><input type="text" asp-for="@Model.User.LastName" placeholder="Last Name" /></p>
+                    <p><input type="text" asp-for="@Model.Shipping.Address1" placeholder="Address 1" /></p>
+                    <p><input type="text" asp-for="@Model.Shipping.Address2" placeholder="Address 2" /></p>
+                    <p><input type="text" asp-for="@Model.Shipping.City" placeholder="City" /></p>
+                    <p><input type="text" asp-for="@Model.Shipping.State" placeholder="State" /></p>
                     <input type="hidden" asp-for="@Model.Order.ID" />
+                    <p>Total: @Model.Order.TotalPrice</p>
                     <input id="confirm_button" type="submit" value="Complete" />
                 </form>
             </div>

@@ -8,7 +8,6 @@
 		<p id="form_title">Registratious?</p>
 		<form method="post" asp-action="Register">
 			<div asp-validation-summary="All"></div>
-
 			<p><input type="text" asp-for="@Model.Register.FirstName" placeholder="First Name" /></p>
 			<p><input type="text" asp-for="@Model.Register.LastName" placeholder="Last Name" /></p>
 			<p><input type="text" asp-for="@Model.Register.Email" placeholder="Email" /></p>
@@ -16,5 +15,8 @@
 			<p><input type="password" asp-for="@Model.Register.ConfirmPassword" placeholder="Re-enter Password" /></p>
 			<p><input type="submit" value="Confirmatious?" /></p>
 		</form>
+        <form method="get" asp-action="Login">
+            <p><input type="submit" value="Or want to login?" /></p>
+        </form>
 	</div>
 </main>

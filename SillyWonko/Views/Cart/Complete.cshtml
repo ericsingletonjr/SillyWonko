@@ -13,10 +13,12 @@
                 <p>@product.Product.Name QTY:@product.Quantity Price:@product.Product.Price</p>
             }
             <hr />
-            <form method="get" asp-action="Index" asp-controller="Shop">
-                <p>Total: @Model.Order.TotalPrice</p>
-                <input id="confirm_button" type="submit" value="Back to shopping" />
-            </form>
+            <div class="form_container">
+                <form method="get" asp-action="Index" asp-controller="Shop">
+                    <p>Total: @Model.Order.TotalPrice</p>
+                    <input id="confirm_button" type="submit" value="Back to shopping" />
+                </form>
+            </div>
         </section>
     </div>
 </main>
