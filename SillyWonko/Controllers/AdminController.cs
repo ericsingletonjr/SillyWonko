@@ -108,6 +108,29 @@ namespace SillyWonko.Controllers
             }
             return RedirectToAction("Index", "Admin");
         }
+		[HttpGet]
+		public async Task<IActionResult> OrderDetail(int? id)
+		{
+			UserViewModel uvm = new UserViewModel();
+			if (id.HasValue)
+			{
+				List<Product> products = new List<Product>();
+				uvm.Order = await _orders.GetOrderByID(id.Value);
+				uvm.Order.Products = await _orders.GetSoldProducts(id.Value);
+				foreach (SoldProduct item in uvm.Order.Products)
+				{
+					products.Add(await _context.GetProductByID(item.ProductID));
+				}
+				uvm.Products = products;
+				return View(uvm);
+			}
+			if (uvm.Order != null)
+			{
+				return View(uvm);
+			}
+			return RedirectToAction("Index", "Admin");
+		}
+
         /// <summary>
         /// Action that lets an admin update the details of a 
         /// specific product in the database

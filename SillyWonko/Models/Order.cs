@@ -16,7 +16,8 @@ namespace SillyWonko.Models
         [Display(Name = "Total Price")]
         public decimal TotalPrice { get; set; }
         public int TotalItems { get; set; }
-        [Column(TypeName="date")]
+        [Column(TypeName="Date")]
+		[DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
     }
 }
