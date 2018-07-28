@@ -7,6 +7,11 @@
 
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
+
+@{ 
+    bool IsUserSignedIn = SignInManager.IsSignedIn(User);
+}
+
 <head>
 	<title>@ViewBag.Title</title>
 	<meta name="viewport" content="width=device-width" />
@@ -21,22 +26,26 @@
 			@if (TempData["LogOut"] != null)
 			{<p>@TempData["LogOut"]</p>}
 
-			@if (SignInManager.IsSignedIn(User))
+			@if (IsUserSignedIn)
 			{
 				<p>@User.Claims.First(c => c.Type == "FullName").Value</p>
 				<p>@User.Identity.Name</p>
 			}
-			<ul>
-				<li><a asp-action="Index" asp-controller="Home">Home</a></li>
-				@if (User.IsInRole(ApplicationRoles.Administrator))
-				{
-					<li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
-				}
-				<li><a asp-action="Index" asp-controller="Shop">Products</a></li>
-				<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
-			</ul>
+                <ul>
+                    <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+                    @if (IsUserSignedIn)
+                    {
+                        <li><a href="/Profile">Profile</a></li>
+                    }
+                    @if (User.IsInRole(ApplicationRoles.Administrator))
+                    {
+                        <li><a asp-action="Index" asp-controller="Admin">Dashboard</a></li>
+                    }
+                    <li><a asp-action="Index" asp-controller="Shop">Products</a></li>
+                    <li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
+                </ul>
 
-			@if (!SignInManager.IsSignedIn(User))
+			@if (!IsUserSignedIn)
 			{
 
 				<form method="post" asp-controller="Account" asp-action="Login">
