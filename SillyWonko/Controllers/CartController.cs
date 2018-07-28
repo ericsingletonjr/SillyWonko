@@ -163,6 +163,7 @@ namespace SillyWonko.Controllers
 
                 List<Product> addProducts = new List<Product>();
                 List<CartItem> placeItems = new List<CartItem>();
+
                 foreach (SoldProduct item in existingOrder.Products)
                 {
                     Product product = await _context.GetProductByID(item.ProductID);
@@ -174,6 +175,7 @@ namespace SillyWonko.Controllers
                         Quantity = item.Quantity
                     };
                     placeItems.Add(cartItem);
+                    existingOrder.TotalItems += item.Quantity;
                 }
                 existingOrder.TotalPrice = total;
                 await _order.UpdateOrder(existingOrder.ID, existingOrder);
@@ -196,10 +198,10 @@ namespace SillyWonko.Controllers
             foreach (CartItem item in cartItems)
             {
                 await _order.CreateSoldProduct(newOrder, item);
+                newOrder.TotalItems += item.Quantity;
             }
             Cart complete = await _cart.GetCart(user.Id);
-
-            complete.IsCheckedOut = true;
+            await _order.UpdateOrder(newOrder.ID, newOrder);
 
             newOrder.Products = await _order.GetSoldProducts(newOrder.ID);
             List<Product> products = new List<Product>();
@@ -220,7 +222,6 @@ namespace SillyWonko.Controllers
             await _cart.DeleteCart(complete.ID);
             await _cart.CreateCart(user);
             return View(uvm);
-
         }
         /// <summary>
         /// Action to prevent users from accessing this
@@ -255,6 +256,7 @@ namespace SillyWonko.Controllers
                 };
                 productList.Add(cartItem);
             }
+
             Cart placeHolder = new Cart();
             var orderPrice = order.TotalPrice;
 

@@ -29,7 +29,8 @@ namespace SillyWonko.Models
             Order newOrder = new Order
             {
                 UserID = user.Id,
-                TotalPrice = totalPrice
+                TotalPrice = totalPrice,
+                OrderDate = DateTime.Today
             };
             await _context.Orders.AddAsync(newOrder);
             await _context.SaveChangesAsync();
@@ -38,8 +39,7 @@ namespace SillyWonko.Models
                                              (o.UserID == user.Id) &&
                                              (o.IsCheckedOut != true))
                                              .OrderBy(o => o.ID)
-                                             .FirstOrDefaultAsync();
-                                             
+                                             .FirstOrDefaultAsync();                                            
             return order;
         }
         /// <summary>
