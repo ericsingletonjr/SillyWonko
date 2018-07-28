@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SillyWonko.Models;
 using SillyWonko.Models.Interfaces;
@@ -15,11 +16,15 @@ namespace SillyWonko.Controllers
     {
         private IWarehouse _context;
 		private IOrderService _orders;
+		private UserManager<ApplicationUser> _userManager { get; set; }
+		private SignInManager<ApplicationUser> _signInManager {	get; set; }
 
-		public AdminController(IWarehouse context, IOrderService orders)
+		public AdminController(IWarehouse context, IOrderService orders, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
 			_orders = orders;
+			_userManager = userManager;
+			_signInManager = signInManager;
         }
 
         [Authorize(Policy = "AdminOnly")]
@@ -30,6 +35,14 @@ namespace SillyWonko.Controllers
             uvm.Products = productList;
 			var orderList = await _orders.GetRecentOrders();
 			uvm.Orders = orderList;
+			uvm.Users = new List<ApplicationUser>();
+			foreach (var order in orderList)
+			{
+				ApplicationUser user = new ApplicationUser();
+				user.Id = order.UserID;
+				user.UserName = await _userManager.GetUserNameAsync(user);
+				uvm.Users.Add(user);
+			}
 			return View(uvm);
         }
 

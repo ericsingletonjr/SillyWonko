@@ -23,5 +23,6 @@ namespace SillyWonko.Models.ViewModels
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<SoldProduct> SoldProducts { get; set; }
 		public IEnumerable<Order> Orders { get; set; }
+		public List<ApplicationUser> Users { get; set; }
 	}
 }
