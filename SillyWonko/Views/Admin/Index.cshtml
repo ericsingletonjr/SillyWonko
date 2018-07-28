@@ -31,7 +31,9 @@
 				<section class="order_list">
 					@foreach (var order in Model.Orders)
 					{
+					<a asp-action="OrderDetail" asp-route-id="@order.ID">
 						<p>Order Number: @order.ID</p>
+					</a>
 						<p>Total: @order.TotalPrice</p>
                         <p>User: @Model.Users[index].FirstName @Model.Users[index].LastName</p>
                         index++;
