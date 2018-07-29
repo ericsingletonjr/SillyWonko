@@ -155,13 +155,28 @@ namespace SillyWonko.Models
             var orders = await _context.Orders.Where(i => i.UserID == userID).ToListAsync();
             return orders;
         }
-        /// <summary>
-        /// Action allows us to get an order specifically
-        /// by its id
-        /// </summary>
-        /// <param name="id">ID of order</param>
-        /// <returns>Order</returns>
-        public async Task<Order> GetOrderByID(int id)
+		/// <summary>
+		/// Action to get most recent three orders based on userId.
+		/// </summary>
+		/// <param name="userID"></param>
+		/// <returns>List of 3 most recent orders specific to user</returns>
+		public async Task<List<Order>> GetRecent3Orders(string userID)
+		{
+			var orders = await _context.Orders.Where(i => i.UserID == userID).OrderByDescending(o => o.ID).Take(3).ToListAsync();
+
+			foreach (var order in orders)
+			{
+				order.Products = await _context.SoldProducts.Where(p => p.OrderID == order.ID).ToListAsync();
+			}
+			return orders;
+		}
+		/// <summary>
+		/// Action allows us to get an order specifically
+		/// by its id
+		/// </summary>
+		/// <param name="id">ID of order</param>
+		/// <returns>Order</returns>
+		public async Task<Order> GetOrderByID(int id)
         {
             var order = await _context.Orders.FindAsync(id);
             return order;
@@ -228,5 +243,5 @@ namespace SillyWonko.Models
             }
             return product;
         }
-    }
+	}
 }
