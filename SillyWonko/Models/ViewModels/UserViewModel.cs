@@ -12,6 +12,7 @@ namespace SillyWonko.Models.ViewModels
         public LoginViewModel Login { get; set; }
         public ExternalLoginViewModel External { get; set; }
         public RegisterViewModel Register { get; set; }
+        public ShippingViewModel Shipping { get; set; }
 
         public Order Order { get; set; }
         public Product Product { get; set; }
@@ -21,6 +22,8 @@ namespace SillyWonko.Models.ViewModels
 
         public IEnumerable<Claim> Claims { get; set; }
         public IEnumerable<Product> Products { get; set; }
-        public IEnumerable<SoldProduct> SoldProducts { get; set; }
-    }
+        public List<SoldProduct> SoldProducts { get; set; }
+		public IEnumerable<Order> Orders { get; set; }
+		public List<ApplicationUser> Users { get; set; }
+	}
 }

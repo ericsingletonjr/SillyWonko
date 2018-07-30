@@ -1,0 +1,18 @@
+﻿@page
+@model SillyWonko.Pages.OrdersModel
+@{
+	Layout = "_Profile";
+}
+<h1>Recent Orders</h1>
+<div class="form_container">
+	@foreach (var order in Model.Orders)
+	{
+		<p>@order.ID</p>
+		<p>@order.OrderDate.ToString("MM/dd/yyyy")</p>
+		foreach (var product in order.Products)
+		{
+			var item = Model.Products.Where(p => p.ID == product.ProductID).FirstOrDefault();
+			<p>@item.Name</p>
+		}
+	}
+</div>

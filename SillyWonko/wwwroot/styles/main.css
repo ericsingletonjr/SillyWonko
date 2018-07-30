@@ -19,15 +19,18 @@ body
 	font-size: 1.2rem;
 }
 
-h1 {
+h1 
+{
 	font-size: 3rem;
 }
 
-p {
+p 
+{
 	font-size: 1.2rem;
 }
 
-.main_container {
+.main_container 
+{
 	margin: 0 auto;
 	max-width: 80rem;
 }
@@ -75,11 +78,19 @@ nav a:hover
 	color: rgb(144, 4, 4);
 }
 
-nav input
+nav input[type=text], input[type=password] 
 {
-	border: none;
+	width: 100%;
+	font-weight: 300;
 	margin-top: 1rem;
-	padding: .75rem;
+	border: none;
+	padding: .75rem 1rem;
+	box-shadow: inset 0 0 .15rem rgba(0, 0, 0, .25);
+}
+
+nav input 
+{
+	margin-top: 1rem;
 }
 
 .nav_identity p:first-of-type
@@ -120,6 +131,7 @@ nav #register_link
 
 .nav_provider input
 {
+	border: none;
 	background: none;
 	color: transparent;
 	top: 0;

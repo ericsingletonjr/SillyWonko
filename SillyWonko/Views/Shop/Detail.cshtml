@@ -4,31 +4,39 @@
 @using SillyWonko.Models;
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
-@{ 
-	Layout = "_Detail";
+@{
+    Layout = "_Detail";
 }
 
 <main class="main_container">
     <header>
         <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
     </header>
-	<div class="product_detail">
-		<section id="product_wrapper">
-			<div class="product_cell">
-				<img class="product_image" src="~/@Model.Product.Image" />
-			</div>
+    <div class="product_detail">
+        <section id="product_wrapper">
+            <div class="product_cell">
+                <img class="product_image" src="~/@Model.Product.Image" />
+            </div>
             <div id="detail_card">
                 <p id="detail_name">@Model.Product.Name</p>
                 <p id="detail_description">@Model.Product.Description</p>
                 <p id="detail_price">$@Model.Product.Price</p>
 
-                <form asp-action="AddToCart" asp-controller="Shop" method="post">
-                    <input type="hidden" asp-for="Product.ID" />
-                    <label asp-for="CartItem.Quantity">Amount of want</label>
-                    <input type="number" asp-for="CartItem.Quantity" min="1" max="7" value="1" />
-                    <input id="detail_button" value="I Want It" type="submit" />
-                </form>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form asp-action="AddToCart" asp-controller="Shop" method="post">
+                        <input type="hidden" asp-for="Product.ID" />
+                        <input type="number" asp-for="CartItem.Quantity" min="1" max="7" value="" placeholder="Enter an amount" />
+                        <input id="detail_button" value="I Want It" type="submit" />
+                    </form>
+                }
+                else
+                {
+                    <form asp-action="Register" asp-controller="Account" method="get">
+                        <input id="detail_button" value="Log in or Register" type="submit" />
+                    </form>
+                }
             </div>
-		</section>
-	</div>
+        </section>
+    </div>
 </main>

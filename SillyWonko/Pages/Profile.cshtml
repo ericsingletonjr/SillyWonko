@@ -1,0 +1,26 @@
+﻿@page
+@model SillyWonko.Pages.Profile.ProfileModel
+@{
+	Layout = "_Profile";
+}
+<header>
+	<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+</header>
+<main class="main_container">
+	<div class="form_container">
+		<p id="form_title">Sweet Home</p>
+		<form method="post">
+
+			<input asp-for="FirstName" placeholder="First Name"/>
+			<input asp-for="LastName" placeholder="Last Name" />
+			<input readonly="readonly" asp-for="Email" />
+			<input readonly="readonly" asp-for="CricketMember" />
+			<input type="submit" value="Transmogrify" />
+		</form>
+		<a href="/Orders">Hiterhto</a>
+	</div>
+</main>
+
+
+
+

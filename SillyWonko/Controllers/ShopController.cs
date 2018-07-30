@@ -71,6 +71,7 @@ namespace SillyWonko.Controllers
             if (!String.IsNullOrEmpty(userID))
             {
                 var cart = await _cart.GetCart(userID);
+                if (uvm.CartItem.Quantity < 1) uvm.CartItem.Quantity = 1;
 
                 var result = await _cart.CreateCartItem(cart, uvm.CartItem);
 

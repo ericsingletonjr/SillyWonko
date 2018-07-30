@@ -1,52 +1,65 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
 <main class="main_container">
-    <header>
-        <img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
-    </header>
-    <div class="inventory_list">
-        <section id="list_wrapper">
-            <p id="detail_name">Your Cart</p>
+	<header>
+		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+	</header>
+	<div class="inventory_list">
+		<section id="list_wrapper">
 
-            @foreach (var product in Model.Cart.CartItems)
-            {
-            <div id="list_item">
-                <form asp-action="Detail" asp-controller="Shop" asp-route-id="@product.Product.ID" method="get">
-                    <input id="item_name" value="@product.Product.Name" type="submit" />
-                    <div class="item_info">
-                        <img class="item_image" src="@product.Product.Image" alt="@product.Product.Name" />
-                        <div class="mini_wrapper">
-                            <p>Qty</p>
-                            <p id="item_quantity">@product.Quantity</p>
-                        </div>
-                        <div class="mini_wrapper">
-                            <p>Price</p>
-                            <p id="item_price">@product.Product.Price</p>
-                        </div>
-                    </div>
-                </form>
+			@if (Model.Cart.CartItems.Count > 0)
+			{
+				<p id="detail_name">Cart</p>
+				@foreach (var product in Model.Cart.CartItems)
+				{
+					<div id="list_item">
+						<form asp-action="Detail" asp-controller="Shop" asp-route-id="@product.Product.ID" method="get">
+							<input id="item_name" value="@product.Product.Name" type="submit" />
+							<div class="item_info">
+								<div class="mid_wrapper">
+									<img class="item_image" src="@product.Product.Image" alt="@product.Product.Name" />
+									<div class="mini_wrapper">
+										<p>Qty</p>
+										<p id="item_quantity">@product.Quantity</p>
+									</div>
+									<div class="mini_wrapper">
+										<p>Price</p>
+										<p id="item_price">@product.Product.Price</p>
+									</div>
+								</div>
+							</div>
+						</form>
 
-                <form method="post" asp-controller="Cart" asp-action="UpdateItem" asp-route-id="@product.ID">
-                    <input type="number" value="@product.Quantity" name="quantity" min="1" max="7" />
-                    <input id="confirm_button" value="update" type="submit" />
-                </form>
-                <form method="post" asp-controller="Cart" asp-action="RemoveItem" asp-route-id="@product.ID">
-                    <input id="confirm_button" value="remove" type="submit" />
-                </form>
-            </div>
-            }
-            <hr />
-            <div>
-                <form method="post" asp-controller="Cart" asp-action="Checkout">
-                    <input type="hidden" asp-for="@Model.Cart.ID" />
-                    <input type="hidden" asp-for="@Model.Total" />
-                    <input id="confirm_button" type="submit" value="Checkout" />
-                    <div class="total_wrapper">
-                        <p id="total_price">Total</p>
-                        <p id="total_price">@Model.Total</p>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </div>
+						<form class="cart_input" method="post" asp-controller="Cart" asp-action="UpdateItem" asp-route-id="@product.ID">
+							<input type="number" value="" name="quantity" min="1" max="7" placeholder="Enter new quantity"/>
+							<input id="confirm_button" value="update" type="submit" />
+						</form>
+						<form class="cart_input" method="post" asp-controller="Cart" asp-action="RemoveItem" asp-route-id="@product.ID">
+							<input id="confirm_button" value="remove" type="submit" />
+						</form>
+					</div>
+				}
+				<div id="total_section">
+					<form method="post" asp-controller="Cart" asp-action="Checkout">
+						<input type="hidden" asp-for="@Model.Cart.ID" />
+						<div class="total_wrapper">
+							<p id="total_price">Total</p>
+							<p id="total_price">@Model.Total</p>
+						</div>
+						<input type="hidden" asp-for="@Model.Total" />
+						<input id="confirm_button" type="submit" value="Checkout" />
+					</form>
+				</div>
+			}
+			else
+			{
+				<p id="detail_name">Your cart is empty. Curious. </p>
+				<div>
+					<form method="get" asp-controller="Shop" asp-action="Index">
+						<input id="confirm_button" type="submit" value="Shoppe" />
+					</form>
+				</div>
+			}
+		</section>
+	</div>
 </main>

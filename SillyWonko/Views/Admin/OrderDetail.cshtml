@@ -1,0 +1,12 @@
+﻿@model SillyWonko.Models.ViewModels.UserViewModel
+@{ int index = 0;}
+	<div class="main_container">
+		Order Date: @Model.Order.OrderDate.ToString("MM/dd/yyyy")
+		Order Number: @Model.Order.ID
+		@foreach (var product in Model.Products)
+		{
+			<p>@product.Name, @product.Price, @product.Sku, @Model.Order.Products[index].Quantity</p>
+		}
+		Total Items: @Model.Order.TotalItems
+		Order Total: @Model.Order.TotalPrice
+	</div>

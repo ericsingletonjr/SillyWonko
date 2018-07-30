@@ -49,7 +49,6 @@ namespace SillyWonko.Controllers
         {
             return View(new UserViewModel());
         }
-
         /// <summary>
         /// This action is our POST that takes the information from the Register
         /// View and uses a ViewModel to create a new ApplicationUser. From there,
@@ -88,23 +87,23 @@ namespace SillyWonko.Controllers
                         randNum = 15;
                     }
 
-                    if (randNum % 15 == 0 || user.Email.ToLower() == "gold@wonko.com")
+                    if (randNum % 15 == 0 || user.Email.ToLower() == "gold@sillywonko.com")
                     {
                         Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
                         Claims.Add(buzzyFizz);
                     }
-                    if (randNum % 5 == 0 || user.Email.ToLower() == "silver@wonko.com")
+                    if (randNum % 5 == 0 || user.Email.ToLower() == "silver@sillywonko.com")
                     {
                         Claim fizzy = new Claim("BuzzyFizz", "Silver Cricket Member");
                         Claims.Add(fizzy);
                     }
-                    if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@wonko.com")
+                    if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@sillywonko.com")
                     {
                         Claim buzzy = new Claim("BuzzyFizz", "Bronze Cricket Member");
                         Claims.Add(buzzy);
                     }
 
-                    if(user.Email.ToLower().Split("@")[1] == "wonko.com")
+                    if(user.Email.ToLower().Split("@")[1] == "sillywonko.com")
                     {
                         Claim workerClaim = new Claim("Employee", user.Email.ToLower());
                         Claims.Add(workerClaim);
@@ -134,7 +133,6 @@ namespace SillyWonko.Controllers
         {
             return View(new UserViewModel());
         }
-
         /// <summary>
         /// Action that takes in a LoginViewModel and is used to check if the database
         /// has the correct information. If not, it will redirect to the login page again
@@ -148,19 +146,26 @@ namespace SillyWonko.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(uvm.Login.Email,
-                    uvm.Login.Password, false, false);
-
-                if (result.Succeeded)
+                if (uvm.Login.Email != null && uvm.Login.Password != null)
                 {
-                    var user = await _userManager.FindByEmailAsync(uvm.Login.Email);
+                    var result = await _signInManager.PasswordSignInAsync(uvm.Login.Email,
+                        uvm.Login.Password, false, false);
 
-                    if (await _userManager.IsInRoleAsync(user,ApplicationRoles.Administrator))
+                    if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Admin");
-                    }
+                        var user = await _userManager.FindByEmailAsync(uvm.Login.Email);
 
-                    return RedirectToAction("Index", "Shop");
+                        if (await _userManager.IsInRoleAsync(user, ApplicationRoles.Administrator))
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+
+                        return RedirectToAction("Index", "Shop");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Whoops, try again.");
+                    }
                 }
                 else
                 {
@@ -217,8 +222,7 @@ namespace SillyWonko.Controllers
             {
                 Email = email
             };
-            return View("ExternalLogin", new UserViewModel { External = elvm });
-            
+            return View("ExternalLogin", new UserViewModel { External = elvm });            
         }
         /// <summary>
         /// Action that allow us to create a user from the given third-party information.

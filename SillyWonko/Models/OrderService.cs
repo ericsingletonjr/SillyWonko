@@ -29,7 +29,8 @@ namespace SillyWonko.Models
             Order newOrder = new Order
             {
                 UserID = user.Id,
-                TotalPrice = totalPrice
+                TotalPrice = totalPrice,
+                OrderDate = DateTime.Today
             };
             await _context.Orders.AddAsync(newOrder);
             await _context.SaveChangesAsync();
@@ -38,8 +39,7 @@ namespace SillyWonko.Models
                                              (o.UserID == user.Id) &&
                                              (o.IsCheckedOut != true))
                                              .OrderBy(o => o.ID)
-                                             .FirstOrDefaultAsync();
-                                             
+                                             .FirstOrDefaultAsync();                                            
             return order;
         }
         /// <summary>
@@ -129,24 +129,54 @@ namespace SillyWonko.Models
             var orders = await _context.Orders.ToListAsync();
             return orders;
         }
-        /// <summary>
-        /// Action that lets us get all the associated orders
-        /// based on a specific userIds
-        /// </summary>
-        /// <param name="userID">UserID</param>
-        /// <returns>List of Orders associated with the specific user</returns>
-        public async Task<List<Order>> GetOrdersByUserID(string userID)
+		/// <summary>
+		/// Action that allows us to view most recent orders from the
+		/// database. Admin purposes
+		/// </summary>
+		/// <returns>List of Orders</returns>
+		public async Task<List<Order>> GetRecentOrders()
+		{
+			var orders = await _context.Orders.OrderByDescending(o => o.ID).Take(20).ToListAsync();
+		
+			foreach (var order in orders)
+			{
+				order.Products = await _context.SoldProducts.Where(p => p.OrderID == order.ID).ToListAsync();
+			}
+			return orders;
+		}
+		/// <summary>
+		/// Action that lets us get all the associated orders
+		/// based on a specific userID.
+		/// </summary>
+		/// <param name="userID">UserID</param>
+		/// <returns>List of Orders associated with the specific user</returns>
+		public async Task<List<Order>> GetOrdersByUserID(string userID)
         {
             var orders = await _context.Orders.Where(i => i.UserID == userID).ToListAsync();
             return orders;
         }
-        /// <summary>
-        /// Action allows us to get an order specifically
-        /// by its id
-        /// </summary>
-        /// <param name="id">ID of order</param>
-        /// <returns>Order</returns>
-        public async Task<Order> GetOrderByID(int id)
+		/// <summary>
+		/// Action to get the most recent three orders based on userID.
+		/// </summary>
+		/// <param name="userID"></param>
+		/// <returns>List of 3 most recent orders specific to user</returns>
+		public async Task<List<Order>> GetRecent3Orders(string userID)
+		{
+			var orders = await _context.Orders.Where(i => i.UserID == userID).OrderByDescending(o => o.ID).Take(3).ToListAsync();
+
+			foreach (var order in orders)
+			{
+				order.Products = await _context.SoldProducts.Where(p => p.OrderID == order.ID).ToListAsync();
+			}
+			return orders;
+		}
+		/// <summary>
+		/// Action allows us to get an order specifically
+		/// by its id
+		/// </summary>
+		/// <param name="id">ID of order</param>
+		/// <returns>Order</returns>
+		public async Task<Order> GetOrderByID(int id)
         {
             var order = await _context.Orders.FindAsync(id);
             return order;
@@ -213,5 +243,5 @@ namespace SillyWonko.Models
             }
             return product;
         }
-    }
+	}
 }

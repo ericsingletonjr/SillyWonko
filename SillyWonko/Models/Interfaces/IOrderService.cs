@@ -15,7 +15,9 @@ namespace SillyWonko.Models.Interfaces
         Task<HttpStatusCode> DeleteSoldProduct(int id);
 
         Task<List<Order>> GetOrders();
-        Task<List<Order>> GetOrdersByUserID(string userID);
+		Task<List<Order>> GetRecentOrders();
+		Task<List<Order>> GetRecent3Orders(string userID);
+		Task<List<Order>> GetOrdersByUserID(string userID);
         Task<Order> GetRecentOrderByUserID(string userID);
         Task<Order> GetOrderByID(int id);
         Task<List<SoldProduct>> GetSoldProducts(int id);
