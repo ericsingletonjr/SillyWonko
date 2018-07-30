@@ -146,7 +146,7 @@ namespace SillyWonko.Models
 		}
 		/// <summary>
 		/// Action that lets us get all the associated orders
-		/// based on a specific userIds
+		/// based on a specific userID.
 		/// </summary>
 		/// <param name="userID">UserID</param>
 		/// <returns>List of Orders associated with the specific user</returns>
@@ -156,7 +156,7 @@ namespace SillyWonko.Models
             return orders;
         }
 		/// <summary>
-		/// Action to get most recent three orders based on userId.
+		/// Action to get the most recent three orders based on userID.
 		/// </summary>
 		/// <param name="userID"></param>
 		/// <returns>List of 3 most recent orders specific to user</returns>
