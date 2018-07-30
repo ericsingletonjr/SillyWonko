@@ -87,23 +87,23 @@ namespace SillyWonko.Controllers
                         randNum = 15;
                     }
 
-                    if (randNum % 15 == 0 || user.Email.ToLower() == "gold@wonko.com")
+                    if (randNum % 15 == 0 || user.Email.ToLower() == "gold@sillywonko.com")
                     {
                         Claim buzzyFizz = new Claim("BuzzyFizz", "Golden Cricket Member");
                         Claims.Add(buzzyFizz);
                     }
-                    if (randNum % 5 == 0 || user.Email.ToLower() == "silver@wonko.com")
+                    if (randNum % 5 == 0 || user.Email.ToLower() == "silver@sillywonko.com")
                     {
                         Claim fizzy = new Claim("BuzzyFizz", "Silver Cricket Member");
                         Claims.Add(fizzy);
                     }
-                    if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@wonko.com")
+                    if (randNum % 3 == 0 || user.Email.ToLower() == "bronze@sillywonko.com")
                     {
                         Claim buzzy = new Claim("BuzzyFizz", "Bronze Cricket Member");
                         Claims.Add(buzzy);
                     }
 
-                    if(user.Email.ToLower().Split("@")[1] == "wonko.com")
+                    if(user.Email.ToLower().Split("@")[1] == "sillywonko.com")
                     {
                         Claim workerClaim = new Claim("Employee", user.Email.ToLower());
                         Claims.Add(workerClaim);
