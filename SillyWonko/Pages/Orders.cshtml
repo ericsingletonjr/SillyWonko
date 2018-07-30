@@ -1,9 +1,10 @@
 ﻿@page
 @model SillyWonko.Pages.OrdersModel
 @{
+	Layout = "_Profile";
 }
 <h1>Recent Orders</h1>
-<div>
+<div class="form_container">
 	@foreach (var order in Model.Orders)
 	{
 		<p>@order.ID</p>

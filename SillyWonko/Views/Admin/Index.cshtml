@@ -1,7 +1,7 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 
-@{ 
-    int index = 0;
+@{
+	int index = 0;
 }
 
 <main class="main_container">
@@ -10,11 +10,8 @@
 	</header>
 	<div class="admin_wrapper">
 		<section id="list_wrapper">
-			<p id="detail_name">Store Inventory</p>
-			<p id="detail_description">Silly Wonko, LLC.</p>
-			<p id="detail_price">Admin Panel</p>
-
 			<section class="inventory_list">
+				<p id="detail_name">Inventorious</p>
 				@foreach (var product in Model.Products)
 				{
 					<div id="list_item">
@@ -26,18 +23,20 @@
 				}
 
 				<form method="get" asp-controller="Admin" asp-action="Create">
-					<input type="submit" value="Add New Product" />
+					<input id="list_button" type="submit" value="New Curiosity" />
 				</form>
 				<section class="order_list">
 					@foreach (var order in Model.Orders)
 					{
-					<a asp-action="OrderDetail" asp-route-id="@order.ID">
-						<p>Order Number: @order.ID</p>
-					</a>
+					<div class="order_item">
+						<a asp-action="OrderDetail" asp-route-id="@order.ID">
+							<p id="order_number">#SW481516-@order.ID</p>
+						</a>
 						<p>Total: @order.TotalPrice</p>
-                        <p>User: @Model.Users[index].FirstName @Model.Users[index].LastName</p>
-                        index++;
-                    }
+						<p id="order_user">@Model.Users[index].FirstName @Model.Users[index].LastName</p>
+					</div>
+						index++;
+					}
 				</section>
 			</section>
 		</section>
