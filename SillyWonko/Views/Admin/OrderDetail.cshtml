@@ -1,12 +1,34 @@
 ﻿@model SillyWonko.Models.ViewModels.UserViewModel
 @{ int index = 0;}
-	<div class="main_container">
-		Order Date: @Model.Order.OrderDate.ToString("MM/dd/yyyy")
-		Order Number: @Model.Order.ID
-		@foreach (var product in Model.Products)
-		{
-			<p>@product.Name, @product.Price, @product.Sku, @Model.Order.Products[index].Quantity</p>
-		}
-		Total Items: @Model.Order.TotalItems
-		Order Total: @Model.Order.TotalPrice
+
+<main class="main_container">
+	<header>
+		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+	</header>
+	<div class="admin_wrapper">
+		<section id="list_wrapper">
+			<section class="inventory_list">
+				<p id="detail_name">Detailarious</p>
+
+				<section class="order_list">
+					<div class="main_container">
+						<div class="order_item">
+							Order Date: @Model.Order.OrderDate.ToString("MM/dd/yyyy")
+							Order Number: @Model.Order.ID
+						</div>
+						<div class="order_item">
+							@foreach (var product in Model.Products)
+							{
+								<div>@product.Name, @product.Price, @product.Sku, @Model.Order.Products[index].Quantity</div>
+							}
+							<p id="order_user">Total Items: @Model.Order.TotalItems</p>
+							<p id="order_user">Order Total: @Model.Order.TotalPrice</p>
+						</div>
+					</div>
+				</section>
+			</section>
+		</section>
 	</div>
+</main>
+
+

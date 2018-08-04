@@ -69,7 +69,7 @@
 			else
 			{
 				<div>
-					<p id="vc_heading">In Your Cart</p>
+					<p id="vc_heading">Order Preview</p>
 					@await Component.InvokeAsync("CartView", User.Identity.Name)
 				</div>
 				<form asp-controller="Account" asp-action="LogOut">

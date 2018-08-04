@@ -126,6 +126,7 @@ nav #register_link {
 }
 
 #nav_button {
+	cursor: pointer;
 	border: none;
 	font-weight: 700;
 	background: rgb(255, 67, 67);
@@ -182,7 +183,7 @@ nav #register_link {
 #vc_price {
 	display: inline-block;
 	font-size: inherit;
-	color: rgb(144, 4, 4);
+	color: rgb(140, 140, 140);
 	margin: 0;
 }
 
@@ -258,8 +259,8 @@ header #main_logo {
 }
 
 .total_wrapper {
-	display: inline-block;
-	margin: .5rem .75rem .25rem;
+	display: block;
+	text-align: center;
 }
 
 #item_quantity {
@@ -366,11 +367,15 @@ form .no_autocomplete {
 }
 
 #detail_name {
+	background: rgb(255, 67, 67);
+	text-align: center;
+	font-family: 'Yellowtail';
 	font-size: 2rem;
 	margin: 1rem 0 0 0;
-	text-transform: uppercase;
+	text-transform: lowercase;
 	font-weight: 700;
-	color: rgb(255, 67, 67);
+	color: rgb(255, 255, 255);
+	padding: 1rem;
 }
 
 #detail_description {
@@ -411,8 +416,8 @@ form .no_autocomplete {
 
 #total_price {
 	display: inline-block;
-	margin: 0 .75rem 0 0;
 	text-transform: uppercase;
+	text-align: center;
 	font-weight: 700;
 	color: rgb(255, 255, 255);
 }
