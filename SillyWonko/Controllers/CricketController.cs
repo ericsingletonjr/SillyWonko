@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SillyWonko.Controllers
 {
+    [Authorize]
     public class CricketController : Controller
     {
         [Authorize(Policy = "Bronze")]

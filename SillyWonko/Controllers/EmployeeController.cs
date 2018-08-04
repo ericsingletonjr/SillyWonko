@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SillyWonko.Controllers
 {
+    [Authorize(Policy = "Employee")]
     public class EmployeeController : Controller
     {
-        [Authorize(Policy = "Employee")]
         public IActionResult Index()
         {
             return View();

@@ -15,13 +15,14 @@
             <hr />
             <div class="form_container">
                 <form method="post" asp-controller="Cart" asp-action="Complete">
-                    <p><input type="text" asp-for="@Model.User.FirstName" placeholder="First Name" /></p>
-                    <p><input type="text" asp-for="@Model.User.LastName" placeholder="Last Name" /></p>
-                    <p><input type="text" asp-for="@Model.Shipping.Address1" placeholder="Address 1" /></p>
-                    <p><input type="text" asp-for="@Model.Shipping.Address2" placeholder="Address 2" /></p>
-                    <p><input type="text" asp-for="@Model.Shipping.City" placeholder="City" /></p>
-                    <p><input type="text" asp-for="@Model.Shipping.State" placeholder="State" /></p>
-                    <input type="hidden" asp-for="@Model.Order.ID" />
+                    <div asp-validation-summary="All"></div>
+                    <p><input type="text" asp-for="User.FirstName" placeholder="First Name" /></p>
+                    <p><input type="text" asp-for="User.LastName" placeholder="Last Name" /></p>
+                    <p><input type="text" asp-for="Shipping.Address1" placeholder="Address 1" /></p>
+                    <p><input type="text" asp-for="Shipping.Address2" placeholder="Address 2" /></p>
+                    <p><input type="text" asp-for="Shipping.City" placeholder="City" /></p>
+                    <p><input type="text" asp-for="Shipping.State" placeholder="State" /></p>
+                    <input type="hidden" asp-for="Order.ID" />
                     <p>Total: @Model.Order.TotalPrice</p>
                     <input id="confirm_button" type="submit" value="Complete" />
                 </form>
