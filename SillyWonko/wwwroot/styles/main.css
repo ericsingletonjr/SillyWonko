@@ -198,7 +198,7 @@ nav #register_link
 {
 	display: inline-block;
 	font-size: inherit;
-	color: rgb(144, 4, 4);
+	color: rgb(140, 140, 140);
 	margin: 0;
 }
 
@@ -257,6 +257,7 @@ header span
 
 #nav_button 
 {
+	cursor: pointer;
 	border: none;
 	font-weight: 700;
 	background: rgb(255, 67, 67);
