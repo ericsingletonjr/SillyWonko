@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SillyWonko.Models;
@@ -11,6 +12,7 @@ using SillyWonko.Models.ViewModels;
 
 namespace SillyWonko.Controllers
 {
+    [Authorize]
     public class ShopController : Controller
     {
         private IWarehouse _context;
@@ -31,6 +33,7 @@ namespace SillyWonko.Controllers
         /// Action to grab the index of the shop controller
         /// </summary>
         /// <returns>View</returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             UserViewModel uvm = new UserViewModel
@@ -46,6 +49,7 @@ namespace SillyWonko.Controllers
         /// <param name="id">Id of product</param>
         /// <returns>returns UserViewModel</returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Detail(int? id)
         {
             UserViewModel uvm = new UserViewModel();

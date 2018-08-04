@@ -14,6 +14,7 @@ using SillyWonko.Models.ViewModels;
 
 namespace SillyWonko.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private IWarehouse _context;
@@ -245,47 +246,49 @@ namespace SillyWonko.Controllers
         [Authorize(Policy = "Member")]
         public async Task<IActionResult> Complete(UserViewModel uvm)
         {
-            var order = await _order.GetOrderByID(uvm.Order.ID);
-            order.Products = await _order.GetSoldProducts(uvm.Order.ID);
-            List<CartItem> productList = new List<CartItem>();
-
-            foreach (SoldProduct product in order.Products)
+            if (ModelState.IsValid)
             {
-                CartItem cartItem = new CartItem
+                var order = await _order.GetOrderByID(uvm.Order.ID);
+                order.Products = await _order.GetSoldProducts(uvm.Order.ID);
+                List<CartItem> productList = new List<CartItem>();
+
+                foreach (SoldProduct product in order.Products)
                 {
-                    Product = await _context.GetProductByID(product.ProductID),
-                    Quantity = product.Quantity
-                };
-                productList.Add(cartItem);
+                    CartItem cartItem = new CartItem
+                    {
+                        Product = await _context.GetProductByID(product.ProductID),
+                        Quantity = product.Quantity
+                    };
+                    productList.Add(cartItem);
+                }
+
+                Cart placeHolder = new Cart();
+                var orderPrice = order.TotalPrice;
+
+                placeHolder.CartItems = productList;
+                uvm.Cart = placeHolder;
+                uvm.Order = order;
+
+                Transaction transaction = new Transaction(Configuration);
+                transaction.Run(uvm);
+
+                await _order.OrderComplete(uvm.Order.ID);
+                var user = await _userManager.GetUserAsync(User);
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.AppendLine("<p>Thanks for being so curious! Have another look at your silly selections.</p>");
+
+                foreach (var product in productList)
+                {
+                    sb.AppendLine($"<h3>{product.Product.Name}</h3>");
+                    sb.AppendLine($"<p>Qty: {product.Quantity}</p>");
+                    sb.AppendLine($"<p>Price: {product.Product.Price}</p>");
+                }
+                sb.AppendLine($"<h3>Curious Total: {orderPrice}</h3>");
+
+                await _emailSender.SendEmailAsync(user.Email, "Silly Invoice", sb.ToString());
             }
-
-            Cart placeHolder = new Cart();
-            var orderPrice = order.TotalPrice;
-
-            placeHolder.CartItems = productList;
-            uvm.Cart = placeHolder;
-            uvm.Order = order;
-
-            Transaction transaction = new Transaction(Configuration);
-            transaction.Run(uvm);
-
-            await _order.OrderComplete(uvm.Order.ID);
-            var user = await _userManager.GetUserAsync(User);
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("<p>Thanks for being so curious! Have another look at your silly selections.</p>");
-
-            foreach (var product in productList)
-            {
-                sb.AppendLine($"<h3>{product.Product.Name}</h3>");
-                sb.AppendLine($"<p>Qty: {product.Quantity}</p>");
-                sb.AppendLine($"<p>Price: {product.Product.Price}</p>");
-            }
-            sb.AppendLine($"<h3>Curious Total: {orderPrice}</h3>");
-
-            await _emailSender.SendEmailAsync(user.Email, "Silly Invoice", sb.ToString());
-
             return View(uvm);
         }
     }
