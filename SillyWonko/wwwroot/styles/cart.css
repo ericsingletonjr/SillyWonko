@@ -224,8 +224,7 @@ header #main_logo {
 	background: rgb(255, 255, 255);
 	color: rgb(255, 67, 67);
 	text-transform: uppercase;
-	text-align: left;
-	padding: 1rem 1rem 1rem 5rem;
+	padding: 1rem;
 	box-shadow: 0 0 .5rem rgba(0, 0, 0, .15);
 }
 
@@ -400,6 +399,7 @@ form .no_autocomplete {
 }
 
 #confirm_button {
+	display: block;
 	border: none;
 	font-weight: 700;
 	color: rgb(255, 255, 255);
@@ -407,7 +407,6 @@ form .no_autocomplete {
 	padding: 1rem;
 	background: rgb(0, 0, 0);
 	width: 55%;
-	margin-top: .25rem;
 }
 
 #confirm_button:hover {
