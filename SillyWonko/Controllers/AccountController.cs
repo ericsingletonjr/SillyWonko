@@ -118,7 +118,7 @@ namespace SillyWonko.Controllers
                     await _userManager.AddClaimsAsync(user, Claims);
                     await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
 
-                    await _signInManager.SignInAsync(user, false);
+                    await _signInManager.SignInAsync(user, true);
 					await _emailSender.SendEmailAsync(user.Email, "Welcome To SillyWonko!", "<p>Hello.</p>");	
 
                     return RedirectToAction("Index", "Shop");
@@ -149,7 +149,7 @@ namespace SillyWonko.Controllers
                 if (uvm.Login.Email != null && uvm.Login.Password != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(uvm.Login.Email,
-                        uvm.Login.Password, false, false);
+                        uvm.Login.Password, false, true);
 
                     if (result.Succeeded)
                     {

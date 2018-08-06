@@ -3,16 +3,32 @@
 @{
 	Layout = "_Profile";
 }
-<h1>Recent Orders</h1>
-<div class="form_container">
-	@foreach (var order in Model.Orders)
-	{
-		<p>@order.ID</p>
-		<p>@order.OrderDate.ToString("MM/dd/yyyy")</p>
-		foreach (var product in order.Products)
-		{
-			var item = Model.Products.Where(p => p.ID == product.ProductID).FirstOrDefault();
-			<p>@item.Name</p>
-		}
-	}
-</div>
+
+<main class="main_container">
+	<header>
+		<img id="main_logo" src="~/images/wonko_logo.svg" alt="Wonko Logo" />
+	</header>
+	<div class="admin_wrapper">
+		<section id="list_wrapper">
+			<section class="inventory_list">
+				<p id="detail_name">Orderiferous</p>
+
+				<section class="order_list">
+					@foreach (var order in Model.Orders)
+					{
+					<div class="order_item">
+						<p id="order_number">#SW481516-@order.ID</p>
+						<p id="order_user">@order.OrderDate.ToString("MM/dd/yyyy")</p>
+						@foreach (var product in order.Products)
+						{
+						var item = Model.Products.Where(p => p.ID == product.ProductID).FirstOrDefault();
+						<p>@item.Name</p>
+						}
+						<p>Total: @order.TotalPrice</p>
+					</div>
+					}
+				</section>
+			</section>
+		</section>
+	</div>
+</main>

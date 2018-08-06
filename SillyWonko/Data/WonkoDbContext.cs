@@ -80,12 +80,12 @@ namespace SillyWonko.Data
 						"Too hot be held without drinking gloves, but refreshingly frosty to taste, " +
 						"this tropical shapeshifter goes down smooth. Made with real fizzberries.",
 					Image = "images/candy_ten.jpg" },
-                new {ID = 11, Name = "Unknown1", Sku = "ABCD0011", Price = 8.99M,
+                new {ID = 11, Name = "Butterbars", Sku = "ABCD0011", Price = 8.99M,
 					Description =
 						"Too hot be held without drinking gloves, but refreshingly frosty to taste, " +
 						"this tropical shapeshifter goes down smooth. Made with real fizzberries.",
 					Image = "images/candy_eleven.jpg" },
-                new {ID = 12, Name = "Unknown2", Sku = "ABCD0012", Price = 2.99M,
+                new {ID = 12, Name = "Junk", Sku = "ABCD0012", Price = 2.99M,
 					Description =
 						"Too hot be held without drinking gloves, but refreshingly frosty to taste, " +
 						"this tropical shapeshifter goes down smooth. Made with real fizzberries.",
