@@ -59,5 +59,13 @@ SoldProduct Table -
 This allows us to maintain a record of a created purchase while being able to clean up our active Cart and CartItems table. All of these have the
 ability to use full CRUD operations but are dependent on if a user is of role type admin.
 
+# Vulnerability Report
+
+With this project, we have also incuded a vulnerability report based on some of the top 10 OWASPs. You can access that document [here](VulnerabilityReport.md)
+
 # Deployed Site
 [Silly Wonko](http://sillywonko.azurewebsites.net/) is the link to the deployed site
+
+# Contributors
+Eric Singleton
+Jermaine Walker
