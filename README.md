@@ -67,5 +67,5 @@ With this project, we have also incuded a vulnerability report based on some of 
 [Silly Wonko](http://sillywonko.azurewebsites.net/) is the link to the deployed site
 
 # Contributors
-Eric Singleton
-Jermaine Walker
+* Eric Singleton
+* Jermaine Walker
